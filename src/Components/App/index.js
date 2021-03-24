@@ -6,6 +6,7 @@ import GroupFeed from "../GroupFeed";
 import LoginButton from "../LoginButton";
 import LogoutButton from "../LogoutButton";
 import { useAuth0 } from "@auth0/auth0-react";
+import css from "./app.module.css";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -17,19 +18,14 @@ function App() {
       {isAuthenticated && (
         <Router>
           <div>
-            <nav>
-              <ul>
-                <li>
-                  <Link to="/">Profile</Link>
-                </li>
-                <li>
-                  <Link to="/CreateEvent">Create Event</Link>
-                </li>
-                <li>
-                  <Link to="/GroupFeed">Group Feed</Link>
-                </li>
-              </ul>
+            <nav className={css.navbar}>
+              <Link to="/">Profile </Link>
+
+              <Link to="/CreateEvent">Create Event </Link>
+
+              <Link to="/GroupFeed">Group Feed </Link>
             </nav>
+
             <Switch>
               <Route path="/CreateEvent">
                 <CreateEvent />
