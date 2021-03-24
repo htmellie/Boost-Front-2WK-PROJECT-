@@ -9,12 +9,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 import NavBar from "../NavBar";
 
 function App() {
-  const { isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated, isLoading } = useAuth0();
   return (
     <div>
       {!isAuthenticated && <LoginButton></LoginButton>}
-      {isAuthenticated && <LogoutButton></LogoutButton>}
-
       {isAuthenticated && (
         <Router>
           <div>
@@ -27,7 +25,11 @@ function App() {
                 <GroupFeed />
               </Route>
               <Route path="/">
-                <Profile />
+                <Profile
+                  user={user}
+                  isAuthenticated={isAuthenticated}
+                  isLoading={isLoading}
+                />
               </Route>
             </Switch>
           </div>
