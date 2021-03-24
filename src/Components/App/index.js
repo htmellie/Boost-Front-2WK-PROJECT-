@@ -6,10 +6,10 @@ import GroupFeed from "../GroupFeed";
 import LoginButton from "../LoginButton";
 import LogoutButton from "../LogoutButton";
 import { useAuth0 } from "@auth0/auth0-react";
-import css from "./app.module.css";
+import NavBar from "../NavBar";
 
 function App() {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { isAuthenticated, isLoading } = useAuth0();
   return (
     <div>
       {!isAuthenticated && <LoginButton></LoginButton>}
@@ -18,14 +18,7 @@ function App() {
       {isAuthenticated && (
         <Router>
           <div>
-            <nav className={css.navbar}>
-              <Link to="/">Profile </Link>
-
-              <Link to="/CreateEvent">Create Event </Link>
-
-              <Link to="/GroupFeed">Group Feed </Link>
-            </nav>
-
+            <NavBar />
             <Switch>
               <Route path="/CreateEvent">
                 <CreateEvent />
