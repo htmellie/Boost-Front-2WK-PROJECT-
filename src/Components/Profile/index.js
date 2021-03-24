@@ -1,17 +1,28 @@
 import LogoutButton from "../LogoutButton";
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Heading, Grid, GridItem, Center } from "@chakra-ui/react";
 
 function Profile({ user, isAuthenticated, isLoading }) {
   return (
     <Box>
-      {isAuthenticated && (
-        <div>
-          <LogoutButton />
-          <Heading>Welcome, {user.name}!</Heading>
-          <img src={user.picture} alt={user.name} />
-          <p>{user.email}</p>
-        </div>
-      )}
+      {isAuthenticated && <LogoutButton />}
+      <Grid
+        bg="#FACD60"
+        width="75%"
+        height="75%"
+        margin="auto"
+        mt="5"
+        alignContent="center"
+      >
+        {isAuthenticated && (
+          <div>
+            <GridItem>Welcome, {user.name}!</GridItem>
+            <GridItem>
+              <img src={user.picture} alt={user.name} />
+            </GridItem>
+            <GridItem>{user.email}</GridItem>
+          </div>
+        )}
+      </Grid>
     </Box>
   );
 }
