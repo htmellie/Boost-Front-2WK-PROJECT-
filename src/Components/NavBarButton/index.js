@@ -11,6 +11,10 @@ function NavBarButton({ children }) {
       padding="14px 16px"
       text-decoration="none"
       font-size="17px"
+      _hover={{
+        background: "#FACD60",
+        color: "#fff",
+      }}
     >
       {children}
     </ListItem>

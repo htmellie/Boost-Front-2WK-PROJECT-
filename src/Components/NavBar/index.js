@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Box, UnorderedList } from "@chakra-ui/react";
 import NavBarButton from "../NavBarButton";
+import { Flex, Spacer } from "@chakra-ui/react";
 
 function NavBar() {
   return (
@@ -13,15 +14,19 @@ function NavBar() {
       width="100%"
     >
       <UnorderedList>
-        <NavBarButton>
-          <Link to="/">Profile</Link>
-        </NavBarButton>
-        <NavBarButton>
-          <Link to="/CreateEvent">Create Event</Link>
-        </NavBarButton>
-        <NavBarButton>
-          <Link to="/GroupFeed">Group Feed</Link>
-        </NavBarButton>
+        <Flex>
+          <NavBarButton>
+            <Link to="/">Profile</Link>
+          </NavBarButton>
+          <Spacer />
+          <NavBarButton>
+            <Link to="/CreateEvent">Create Event</Link>
+          </NavBarButton>
+          <Spacer />
+          <NavBarButton>
+            <Link to="/GroupFeed">Group Feed</Link>
+          </NavBarButton>
+        </Flex>
       </UnorderedList>
     </Box>
   );
