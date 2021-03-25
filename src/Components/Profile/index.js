@@ -1,17 +1,11 @@
-import LogoutButton from "../LogoutButton";
-import {
-  Box,
-  Heading,
-  Grid,
-  GridItem,
-  Center,
-  Spacer,
-  HStack,
-} from "@chakra-ui/react";
-import GenericButton from "../GenericButton";
-import { useAuth0 } from "@auth0/auth0-react";
-import React, { useEffect, useState } from "react";
-import { users } from "../../Data/sampleData";
+import React, { useEffect, useState } from 'react';
+
+import LogoutButton from '../LogoutButton';
+import { Box, Grid, GridItem, HStack } from '@chakra-ui/react';
+import GenericButton from '../GenericButton';
+import { useAuth0 } from '@auth0/auth0-react';
+import { users } from '../../Data/sampleData';
+import { getUserByUsername } from '../../Libs/httpRequests';
 
 function Profile() {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -19,14 +13,17 @@ function Profile() {
   const [databaseUser, setDatabaseUser] = useState({});
 
   useEffect(() => {
-    setDatabaseUser(users[0]);
-  }, []);
-  console.log(user);
-  // const getData = async () => {
-  //   let res = await fetch();
-  //   let data = await res.json();
+    getUserByUsername(
+      process.env.REACT_APP_BACKEND_URL,
+      'lucaxue',
+      setDatabaseUser
+    );
+  }, [isAuthenticated]);
 
-  // };
+  //get user with username
+  //get group with group id
+  //get events that user will attend with id
+
   if (isLoading) {
     return <div>Loading</div>;
   }
@@ -57,12 +54,12 @@ function Profile() {
           <HStack spacing="2px">
             <GenericButton
               text="Create a group"
-              handleClick={() => console.log("click")}
+              handleClick={() => console.log('click')}
             ></GenericButton>
 
             <GenericButton
               text="Join a group"
-              handleClick={() => console.log("click")}
+              handleClick={() => console.log('click')}
             ></GenericButton>
           </HStack>
         </Grid>
