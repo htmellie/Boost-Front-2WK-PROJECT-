@@ -11,7 +11,6 @@ function App() {
   const { isAuthenticated } = useAuth0();
   return (
     <Router>
-      <NavBar />
       <Switch>
         <Route path="/CreateEvent">
           <CreateEvent />

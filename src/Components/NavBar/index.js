@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, UnorderedList } from "@chakra-ui/react";
+import { Box, Center, GridItem, HStack, UnorderedList } from "@chakra-ui/react";
 import NavBarButton from "../NavBarButton";
-import { Flex, Spacer } from "@chakra-ui/react";
+import { Flex, Spacer, Grid } from "@chakra-ui/react";
 
 function NavBar() {
   return (
@@ -15,17 +15,24 @@ function NavBar() {
     >
       <UnorderedList>
         <Flex>
-          <NavBarButton>
-            <Link to="/">Profile</Link>
-          </NavBarButton>
+          <Center>
+            <NavBarButton>
+              <Link to="/">Profile</Link>
+            </NavBarButton>
+          </Center>
           <Spacer />
-          <NavBarButton>
-            <Link to="/CreateEvent">Create Event</Link>
-          </NavBarButton>
+          <Center>
+            <NavBarButton>
+              <Link to="/CreateEvent">Create Event</Link>
+            </NavBarButton>
+          </Center>
           <Spacer />
-          <NavBarButton>
-            <Link to="/GroupFeed">Group Feed</Link>
-          </NavBarButton>
+          <Center>
+            <NavBarButton>
+              <Link to="/GroupFeed">Group Feed</Link>
+            </NavBarButton>
+          </Center>
+          <Spacer />
         </Flex>
       </UnorderedList>
     </Box>
