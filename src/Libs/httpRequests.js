@@ -4,6 +4,12 @@ export async function getUserByUsername(URL, username, onSuccess) {
   onSuccess(data[0]);
 }
 
-  //get user with username✅
-  //get group with group id
-  //get events that user will attend with id
+export async function getGroupById(URL, groupId, onSuccess) {
+  const res = await fetch(`${URL}/groups/${groupId}`);
+  const data = await res.json();
+  onSuccess(data[0]);
+}
+
+//get user with username✅
+//get group with group id
+//get events that user will attend with id
