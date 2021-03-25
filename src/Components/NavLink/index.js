@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Box, ListItem } from '@chakra-ui/react';
+
+import { Button, Box } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 
 function NavLink({ to, children, ...props }) {
