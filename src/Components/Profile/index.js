@@ -1,8 +1,12 @@
 import LogoutButton from "../LogoutButton";
 import { Box, Heading, Grid, GridItem, Center } from "@chakra-ui/react";
 import GenericButton from "../GenericButton";
+import { useAuth0 } from "@auth0/auth0-react";
+import React from "react";
 
-function Profile({ user, isAuthenticated, isLoading }) {
+function Profile() {
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
   return (
     isAuthenticated && (
       <Box>
