@@ -7,6 +7,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import LoginPage from "../LoginPage";
 import NavBar from "../NavBar";
 
+
 function App() {
   const { isAuthenticated } = useAuth0();
   return (

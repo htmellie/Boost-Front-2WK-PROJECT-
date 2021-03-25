@@ -5,6 +5,7 @@ import { Box, Grid, GridItem, HStack } from '@chakra-ui/react';
 import GenericButton from '../GenericButton';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getUserByUsername } from '../../Libs/httpRequests';
+import EventMap from '../Map'
 
 function Profile() {
   const { user, isAuthenticated, isLoading } = useAuth0();
