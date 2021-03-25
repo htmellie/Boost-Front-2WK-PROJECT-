@@ -21,7 +21,7 @@ function Profile() {
   useEffect(() => {
     setDatabaseUser(users[0]);
   }, []);
-
+  console.log(user);
   // const getData = async () => {
   //   let res = await fetch();
   //   let data = await res.json();
