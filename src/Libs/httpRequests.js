@@ -18,4 +18,6 @@ export async function getEventById(URL, eventId, onSuccess) {
 
 //get user with username✅
 //get group with group id✅
-//get events that user will attend with id
+//get events that user will attend with id✅
+//sort by time, access earliest
+//post user if they don't exist
