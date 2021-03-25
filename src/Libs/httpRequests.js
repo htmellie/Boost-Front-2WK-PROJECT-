@@ -7,9 +7,15 @@ export async function getUserByUsername(URL, username, onSuccess) {
 export async function getGroupById(URL, groupId, onSuccess) {
   const res = await fetch(`${URL}/groups/${groupId}`);
   const data = await res.json();
-  onSuccess(data[0]);
+  onSuccess(data.name);
+}
+
+export async function getEventById(URL, eventId, onSuccess) {
+  const res = await fetch(`${URL}/events/${eventId}`);
+  const data = await res.json();
+  onSuccess(data);
 }
 
 //get user with username✅
-//get group with group id
+//get group with group id✅
 //get events that user will attend with id
