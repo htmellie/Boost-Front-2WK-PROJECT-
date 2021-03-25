@@ -19,9 +19,6 @@ function Profile() {
     );
   }, [isAuthenticated]);
 
-  //get user with username
-  //get group with group id
-  //get events that user will attend with id
 
   if (isLoading || !databaseUser) {
     return <div>Loading</div>;
