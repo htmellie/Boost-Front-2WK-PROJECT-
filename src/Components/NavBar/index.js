@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Box, Center, GridItem, HStack, UnorderedList } from "@chakra-ui/react";
+import { Box, Center, UnorderedList } from "@chakra-ui/react";
 import NavBarButton from "../NavBarButton";
-import { Flex, Spacer, Grid } from "@chakra-ui/react";
+import { Flex, Spacer } from "@chakra-ui/react";
 
 function NavBar() {
   return (

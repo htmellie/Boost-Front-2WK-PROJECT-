@@ -4,13 +4,12 @@ import LogoutButton from '../LogoutButton';
 import { Box, Grid, GridItem, HStack } from '@chakra-ui/react';
 import GenericButton from '../GenericButton';
 import { useAuth0 } from '@auth0/auth0-react';
-import { users } from '../../Data/sampleData';
 import { getUserByUsername } from '../../Libs/httpRequests';
 
 function Profile() {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
-  const [databaseUser, setDatabaseUser] = useState({});
+  const [databaseUser, setDatabaseUser] = useState(null);
 
   useEffect(() => {
     getUserByUsername(
@@ -24,7 +23,7 @@ function Profile() {
   //get group with group id
   //get events that user will attend with id
 
-  if (isLoading) {
+  if (isLoading || !databaseUser) {
     return <div>Loading</div>;
   }
   return (
