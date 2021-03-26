@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import LogoutButton from '../LogoutButton';
-import { Box, Grid, GridItem, HStack } from '@chakra-ui/react';
-import GenericButton from '../GenericButton';
-import { useAuth0 } from '@auth0/auth0-react';
+import LogoutButton from "../LogoutButton";
+import { Box, Grid, GridItem, HStack } from "@chakra-ui/react";
+import GenericButton from "../GenericButton";
+import { useAuth0 } from "@auth0/auth0-react";
 import {
   getUserByUsername,
   getGroupById,
   getEventById,
-} from '../../Libs/httpRequests';
+} from "../../Libs/httpRequests";
 
 function Profile() {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -16,11 +16,14 @@ function Profile() {
   const [databaseUser, setDatabaseUser] = useState(null);
   const [partOfGroup, setPartOfGroup] = useState(null);
   const [eventsWillAttend, setEventsWillAttend] = useState([]);
+  const [nextEvent, setNextEvent] = useState(null);
+
+  //console.log(user);
 
   useEffect(() => {
     getUserByUsername(
       process.env.REACT_APP_BACKEND_URL,
-      'lucaxue',
+      "lucaxue",
       setDatabaseUser
     );
   }, [isAuthenticated]);
@@ -39,9 +42,21 @@ function Profile() {
     );
   }, [databaseUser]);
 
-  console.log(partOfGroup);
-  console.log(eventsWillAttend);
-  console.log(databaseUser);
+  useEffect(() => {
+    const futureEvents = eventsWillAttend.filter(
+      (event) => new Date(event.time) > new Date(Date.now())
+    );
+    console.log(futureEvents);
+    // setNextEvent(
+    //   futureEvents.reduce((acc, cur) =>
+    //     new Date(cur.time) < new Date(acc.time) ? cur : acc
+    //   )
+    // );
+  }, [eventsWillAttend]);
+
+  //console.log(partOfGroup);
+  //console.log(eventsWillAttend);
+  //console.log(databaseUser);
 
   if (
     isLoading ||
@@ -79,12 +94,12 @@ function Profile() {
           <HStack spacing="2px">
             <GenericButton
               text="Create a group"
-              handleClick={() => console.log('click')}
+              handleClick={() => console.log("click")}
             ></GenericButton>
 
             <GenericButton
               text="Join a group"
-              handleClick={() => console.log('click')}
+              handleClick={() => console.log("click")}
             ></GenericButton>
           </HStack>
         </Grid>
