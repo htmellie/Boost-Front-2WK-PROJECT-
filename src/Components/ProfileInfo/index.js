@@ -1,20 +1,41 @@
-import { useAuth0 } from '@auth0/auth0-react';
-import { Box, Grid, GridItem } from '@chakra-ui/react';
-import LogoutButton from 'Components/LogoutButton';
+import { useAuth0 } from "@auth0/auth0-react";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
+import LogoutButton from "Components/LogoutButton";
 import {
   getUserByUsername,
   getGroupById,
   getEventById,
   getManyEventsByIds,
-} from 'Libs/httpRequests';
-import React, { useEffect, useState } from 'react';
+} from "Libs/httpRequests";
+import React, { useEffect, useState } from "react";
 
 function ProfileInfo() {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
-  const [databaseUser, setDatabaseUser] = useState(null);
+  const [databaseUser, setDatabaseUser] = useState({
+    id: 0,
+    firstName: "",
+    surname: "",
+    username: "",
+    hours: 0,
+    partOfGroupId: 0,
+    adminOfGroupId: 0,
+    eventsIds: [],
+  });
   const [partOfGroup, setPartOfGroup] = useState(null);
-  const [eventsWillAttend, setEventsWillAttend] = useState([]);
+  const [eventsWillAttend, setEventsWillAttend] = useState([
+    {
+      id: 0,
+      name: "",
+      description: "",
+      exerciseType: "",
+      longitude: 0,
+      latitude: 0,
+      time: "2021-04-09T19:10:25",
+      intensity: "",
+      groupId: 0,
+    },
+  ]);
   const [nextEvent, setNextEvent] = useState(null);
 
   //console.log(user);
@@ -22,7 +43,7 @@ function ProfileInfo() {
   useEffect(() => {
     getUserByUsername(
       process.env.REACT_APP_BACKEND_URL,
-      'lucaxue',
+      "lucaxue",
       setDatabaseUser
     );
   }, [isAuthenticated]);
@@ -38,28 +59,33 @@ function ProfileInfo() {
 
     getManyEventsByIds(
       process.env.REACT_APP_BACKEND_URL,
-      [2, 1],
+      databaseUser?.eventsIds,
       setEventsWillAttend
     );
   }, [databaseUser]);
 
-  // useEffect(() => {
-  //   const futureEvents = eventsWillAttend.filter(
-  //     (event) => new Date(event.time) > new Date(Date.now())
-  //   );
-  //   console.log(futureEvents);
-  //   // setNextEvent(
-  //   //   futureEvents.reduce((acc, cur) =>
-  //   //     new Date(cur.time) < new Date(acc.time) ? cur : acc
-  //   //   )
-  //   // );
-  // }, [eventsWillAttend]);
+  useEffect(() => {
+    if (eventsWillAttend.length !== 0) {
+      const futureEvents = eventsWillAttend.filter(
+        (event) => new Date(event.time) > new Date(Date.now())
+      );
+      console.log(futureEvents);
+      setNextEvent(
+        futureEvents.reduce((acc, cur) =>
+          new Date(cur.time) < new Date(acc.time) ? cur : acc
+        )
+      );
+    }
+
+    //console.log(nextEvent);
+  }, [eventsWillAttend]);
 
   if (
     isLoading ||
     !databaseUser ||
     !partOfGroup ||
-    eventsWillAttend.length === 0
+    eventsWillAttend.length === 0 ||
+    !nextEvent
   ) {
     return <div>Loading</div>;
   }
@@ -84,7 +110,7 @@ function ProfileInfo() {
           </GridItem>
           <GridItem>{user.email}</GridItem>
           <GridItem>Group: {partOfGroup}</GridItem>
-          <GridItem>Next Session:{eventsWillAttend[0].name} </GridItem>
+          <GridItem>Next Session:{nextEvent.name} </GridItem>
           <GridItem>Total exercise hours: {databaseUser.hours}</GridItem>
         </Grid>
       </Box>

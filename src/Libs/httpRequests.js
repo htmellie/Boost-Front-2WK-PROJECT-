@@ -22,8 +22,8 @@ export async function getManyEventsByIds(URL, ids, onSuccess) {
 
 export async function postUser(URL, user, onSuccess) {
   const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(user),
   };
   const response = await fetch(`${URL}/users`, requestOptions);
