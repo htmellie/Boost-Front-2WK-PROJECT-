@@ -1,13 +1,10 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Box, Grid, GridItem, Input } from "@chakra-ui/react";
-import GenericButton from "Components/GenericButton";
+import { Box, Grid, GridItem } from "@chakra-ui/react";
 import LogoutButton from "Components/LogoutButton";
 import {
   getUserByUsername,
   getGroupById,
-  getEventById,
   getManyEventsByIds,
-  postUser,
 } from "Libs/httpRequests";
 import React, { useEffect, useState } from "react";
 
@@ -40,17 +37,6 @@ function ProfileInfo() {
     },
   ]);
   const [nextEvent, setNextEvent] = useState(null);
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [newUser, setNewUser] = useState({
-    firstName: "jack",
-    surname: "InTheBox",
-    username: "bounce",
-    hours: 0,
-    partOfGroupId: 2,
-    adminOfGroupId: 2,
-    eventsIds: [1, 2],
-  });
 
   useEffect(() => {
     getUserByUsername(
@@ -100,8 +86,6 @@ function ProfileInfo() {
     return <div>Loading</div>;
   }
 
-  function handleSubmit() {}
-
   return (
     isAuthenticated && (
       <Box>
@@ -125,26 +109,6 @@ function ProfileInfo() {
           <GridItem>Next Session:{nextEvent.name} </GridItem>
           <GridItem>Total exercise hours: {databaseUser.hours}</GridItem>
         </Grid>
-        <Input
-          placeholder="insert First name"
-          onChange={(e) => {
-            setFirstName(e.target.value);
-            console.log(e.target.value);
-          }}
-        />
-        <Input
-          placeholder="insert Last name"
-          onChange={(e) => {
-            setLastName(e.target.value);
-            console.log(e.target.value);
-          }}
-        />
-        <GenericButton
-          text="Submit"
-          handleClick={() =>
-            postUser(process.env.REACT_APP_BACKEND_URL, newUser)
-          }
-        />
       </Box>
     )
   );

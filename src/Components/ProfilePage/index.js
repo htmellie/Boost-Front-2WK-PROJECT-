@@ -1,8 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import { Grid, HStack } from '@chakra-ui/react';
-import GenericButton from '../GenericButton';
-import ProfileInfo from 'Components/ProfileInfo';
+import { Grid, HStack } from "@chakra-ui/react";
+import GenericButton from "../GenericButton";
+import ProfileInfo from "Components/ProfileInfo";
+import NewUserForm from "../NewUserForm";
 
 function ProfilePage() {
   return (
@@ -12,15 +13,16 @@ function ProfilePage() {
         <HStack spacing="2px">
           <GenericButton
             text="Create a group"
-            handleClick={() => console.log('click')}
+            handleClick={() => console.log("click")}
           ></GenericButton>
 
           <GenericButton
             text="Join a group"
-            handleClick={() => console.log('click')}
+            handleClick={() => console.log("click")}
           ></GenericButton>
         </HStack>
       </Grid>
+      <NewUserForm />
     </>
   );
 }
