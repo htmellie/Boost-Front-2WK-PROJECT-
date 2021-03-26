@@ -1,46 +1,30 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CreateEvent from "../CreateEvent";
-import Profile from "../Profile";
+import ProfilePage from "../ProfilePage";
 import GroupFeed from "../GroupFeed";
-import LoginButton from "../LoginButton";
-import LogoutButton from "../LogoutButton";
 import { useAuth0 } from "@auth0/auth0-react";
-import css from "./app.module.css";
+import LoginPage from "../LoginPage";
+import NavBar from "../NavBar";
 
 function App() {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { isAuthenticated } = useAuth0();
   return (
-    <div>
-      {!isAuthenticated && <LoginButton></LoginButton>}
-      {isAuthenticated && <LogoutButton></LogoutButton>}
+    <Router>
+      <Switch>
+        <Route path="/CreateEvent">
+          <CreateEvent />
+        </Route>
+        <Route path="/GroupFeed">
+          <GroupFeed />
+        </Route>
+        <Route path="/">
+          {isAuthenticated ? <ProfilePage /> : <LoginPage />}
+        </Route>
+      </Switch>
 
-      {isAuthenticated && (
-        <Router>
-          <div>
-            <nav className={css.navbar}>
-              <Link to="/">Profile </Link>
-
-              <Link to="/CreateEvent">Create Event </Link>
-
-              <Link to="/GroupFeed">Group Feed </Link>
-            </nav>
-
-            <Switch>
-              <Route path="/CreateEvent">
-                <CreateEvent />
-              </Route>
-              <Route path="/GroupFeed">
-                <GroupFeed />
-              </Route>
-              <Route path="/">
-                <Profile />
-              </Route>
-            </Switch>
-          </div>
-        </Router>
-      )}
-    </div>
+      {isAuthenticated && <NavBar />}
+    </Router>
   );
 }
 
