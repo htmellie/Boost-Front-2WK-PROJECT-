@@ -5,7 +5,6 @@ import LoginButton from "../LoginButton";
 export default function LoginPage() {
   return (
     <>
-      <Heading>Please log in</Heading>
       <LoginButton></LoginButton>
     </>
   );
