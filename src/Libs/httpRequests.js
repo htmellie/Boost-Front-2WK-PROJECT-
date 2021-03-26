@@ -16,9 +16,22 @@ export async function getEventById(URL, eventId, onSuccess) {
   onSuccess(data);
 }
 
+export async function postUser(URL, user, onSuccess) {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(user),
+  };
+  const response = await fetch(`${URL}/users`, requestOptions);
+  const data = await response.json();
+  onSuccess(data);
+}
+
 //get user with username✅
 //get group with group id✅
 //get events that user will attend with id✅
+
+//NOT WORKING:
 //sort by time, access earliest
 //get events user will attend (eventsWillAttend array)
 //use a reduce function to get earliest timec closest to current time

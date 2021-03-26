@@ -10,7 +10,7 @@ import {
   getEventById,
 } from "../../Libs/httpRequests";
 
-function Profile() {
+function ProfilePage() {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
   const [databaseUser, setDatabaseUser] = useState(null);
@@ -23,10 +23,12 @@ function Profile() {
   useEffect(() => {
     getUserByUsername(
       process.env.REACT_APP_BACKEND_URL,
-      "lucaxue",
+      user.nickname,
       setDatabaseUser
     );
   }, [isAuthenticated]);
+
+  //check if db user is an object, if not, do a post request
 
   useEffect(() => {
     getGroupById(
@@ -42,21 +44,17 @@ function Profile() {
     );
   }, [databaseUser]);
 
-  useEffect(() => {
-    const futureEvents = eventsWillAttend.filter(
-      (event) => new Date(event.time) > new Date(Date.now())
-    );
-    console.log(futureEvents);
-    // setNextEvent(
-    //   futureEvents.reduce((acc, cur) =>
-    //     new Date(cur.time) < new Date(acc.time) ? cur : acc
-    //   )
-    // );
-  }, [eventsWillAttend]);
-
-  //console.log(partOfGroup);
-  //console.log(eventsWillAttend);
-  //console.log(databaseUser);
+  // useEffect(() => {
+  //   const futureEvents = eventsWillAttend.filter(
+  //     (event) => new Date(event.time) > new Date(Date.now())
+  //   );
+  //   console.log(futureEvents);
+  //   // setNextEvent(
+  //   //   futureEvents.reduce((acc, cur) =>
+  //   //     new Date(cur.time) < new Date(acc.time) ? cur : acc
+  //   //   )
+  //   // );
+  // }, [eventsWillAttend]);
 
   if (
     isLoading ||
@@ -119,4 +117,4 @@ User information
 
   */
 
-export default Profile;
+export default ProfilePage;

@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CreateEvent from "../CreateEvent";
-import Profile from "../Profile";
+import ProfilePage from "../ProfilePage";
 import GroupFeed from "../GroupFeed";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginPage from "../LoginPage";
@@ -18,7 +18,9 @@ function App() {
         <Route path="/GroupFeed">
           <GroupFeed />
         </Route>
-        <Route path="/">{isAuthenticated ? <Profile /> : <LoginPage />}</Route>
+        <Route path="/">
+          {isAuthenticated ? <ProfilePage /> : <LoginPage />}
+        </Route>
       </Switch>
 
       {isAuthenticated && <NavBar />}
