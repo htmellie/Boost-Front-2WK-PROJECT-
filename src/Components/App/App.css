@@ -37,12 +37,11 @@
   }
 }
 
-
-.leaflet-container{
-  width:30vw;
-  height:25vh;
+.leaflet-container {
+  width: 75vw;
+  height: 40vh;
 }
 
- #mapid{
-  height: 180px;
- }
+#mapid {
+  height: 300px;
+}
