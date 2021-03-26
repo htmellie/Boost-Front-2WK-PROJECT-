@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer } from "react";
 import { FormControl, FormLabel, Input } from "@chakra-ui/react";
 import GenericButton from "Components/GenericButton";
 import { postUser } from "Libs/httpRequests";
