@@ -1,23 +1,21 @@
+import { Button } from '@chakra-ui/react';
 import React, {
   useState,
   useRef,
   useMemo,
-  useCallback,
-  useEffect,
-} from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+} from 'react';
+import { MapContainer, TileLayer, Marker} from 'react-leaflet';
 
 // import 'leaflet/dist/leaflet.css';
 // predetermined long and lat for map
-function EventMap() {
+function LocationMapPicker({ dispatch }) {
   const center = {
     lat: 51.505,
     lng: -0.09,
   };
+  const [position, setPosition] = useState(center);
   // makes the marker draggable to choose a location for event
   function DraggableMarker() {
-    const [draggable, setDraggable] = useState(false);
-    const [position, setPosition] = useState(center);
     const markerRef = useRef(null);
     const eventHandlers = useMemo(
       () => ({
@@ -31,27 +29,20 @@ function EventMap() {
       }),
       []
     );
-    const toggleDraggable = useCallback(() => {
-      setDraggable((d) => !d);
-    }, []);
-    console.log(position);
+
     return (
       <Marker //the blue marker on page
-        draggable={draggable}
+        draggable={true}
         eventHandlers={eventHandlers}
         position={position}
         ref={markerRef}
-      >
-        <Popup minWidth={90}>
-          <span onClick={toggleDraggable}>
-            {draggable
-              ? "Marker is draggable"
-              : "Click here to make marker draggable"}
-          </span>
-        </Popup>
-      </Marker> //pop up that tells user the maker is draggable
+      ></Marker> //pop up that tells user the maker is draggable
     );
   }
+
+  const setLocation = () => {
+    dispatch({ type: 'SET_LOCATION', payload: position });
+  };
 
   return (
     //the map rendered
@@ -63,9 +54,10 @@ function EventMap() {
         />
         <DraggableMarker />
       </MapContainer>
+      <Button onClick={setLocation}>Set Location</Button>
     </>
   );
 }
 // #mapid { height: 180px; }
 
-export default EventMap;
+export default LocationMapPicker;

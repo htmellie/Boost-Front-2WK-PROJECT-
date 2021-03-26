@@ -1,11 +1,11 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    display: "flex",
-    flexWrap: "wrap",
+    display: 'flex',
+    flexWrap: 'wrap',
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -14,19 +14,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-export default function DateAndTimePickers({setEventWhen}) {
+export default function DateAndTimePickers({ dispatch }) {
   const classes = useStyles();
 
-  function HandleChange(e){
-    setEventWhen(e.target.value)
-    console.log(e.target.value);
+  function setDateAndTime(e) {
+    dispatch({ type: 'SET_DATE_AND_TIME', payload: e.target.value });
   }
 
   return (
     <form className={classes.container} noValidate>
-      <TextField onChange={HandleChange}
+      <TextField
+        onChange={setDateAndTime}
         id="datetime-local"
         label="Next appointment"
         type="datetime-local"

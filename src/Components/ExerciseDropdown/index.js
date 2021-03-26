@@ -1,14 +1,13 @@
-import React from "react";
-import { Select } from "@chakra-ui/react";
+import React from 'react';
+import { Select } from '@chakra-ui/react';
 
-function ExerciseDropdown({ setEventWhat }) {
-  function HandleChange(e) {
-    setEventWhat(e.target.value);
-    console.log(e.target.value);
-  }
+function ExerciseDropdown({ dispatch }) {
+  const setExercise = (e) => {
+    dispatch({ type: 'SET_EXERCISE', payload: e.target.value });
+  };
 
   return (
-    <Select placeholder="Select option" onChange={HandleChange}>
+    <Select placeholder="Select option" onChange={setExercise}>
       <option value="Run">Run</option>
       <option value="Cycle">Cycle</option>
       <option value="Bootcamp">Bootcamp</option>
