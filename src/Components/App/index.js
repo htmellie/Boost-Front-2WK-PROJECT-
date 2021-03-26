@@ -1,3 +1,4 @@
+
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CreateEvent from "../CreateEvent";
@@ -9,8 +10,10 @@ import NavBar from "../NavBar";
 import './App.css';
 
 
+
 function App() {
   const { isAuthenticated } = useAuth0();
+
   return (
     <Router>
       <Switch>
