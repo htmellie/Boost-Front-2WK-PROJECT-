@@ -20,7 +20,8 @@ export async function getManyEventsByIds(URL, ids, onSuccess) {
   onSuccess(await Promise.all(ids.map((id) => getEventById(URL, id))));
 }
 
-export async function postUser(URL, user, onSuccess) {
+export async function postUser(URL, user) {
+  console.log(user);
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -28,7 +29,7 @@ export async function postUser(URL, user, onSuccess) {
   };
   const response = await fetch(`${URL}/users`, requestOptions);
   const data = await response.json();
-  onSuccess(data);
+  // onSuccess(data);
 }
 
 //get user with username✅

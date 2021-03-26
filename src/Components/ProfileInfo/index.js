@@ -1,16 +1,19 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Box, Grid, GridItem } from "@chakra-ui/react";
+import GenericButton from "Components/GenericButton";
 import LogoutButton from "Components/LogoutButton";
 import {
   getUserByUsername,
   getGroupById,
   getEventById,
   getManyEventsByIds,
+  postUser,
 } from "Libs/httpRequests";
 import React, { useEffect, useState } from "react";
 
 function ProfileInfo() {
   const { user, isAuthenticated, isLoading } = useAuth0();
+  console.log(user.nickname);
 
   const [databaseUser, setDatabaseUser] = useState({
     id: 0,
@@ -37,8 +40,17 @@ function ProfileInfo() {
     },
   ]);
   const [nextEvent, setNextEvent] = useState(null);
-
-  //console.log(user);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [newUser, setNewUser] = useState({
+    firstName: "jack",
+    surname: "InTheBox",
+    username: "boing",
+    hours: 0,
+    partOfGroupId: 0,
+    adminOfGroupId: 0,
+    eventsIds: [1, 2],
+  });
 
   useEffect(() => {
     getUserByUsername(
@@ -47,8 +59,6 @@ function ProfileInfo() {
       setDatabaseUser
     );
   }, [isAuthenticated]);
-
-  //check if db user is an object, if not, do a post request
 
   useEffect(() => {
     getGroupById(
@@ -90,6 +100,8 @@ function ProfileInfo() {
     return <div>Loading</div>;
   }
 
+  function handleSubmit() {}
+
   return (
     isAuthenticated && (
       <Box>
@@ -113,9 +125,35 @@ function ProfileInfo() {
           <GridItem>Next Session:{nextEvent.name} </GridItem>
           <GridItem>Total exercise hours: {databaseUser.hours}</GridItem>
         </Grid>
+        <input
+          type="text"
+          placeholder="insert First name"
+          onChange={(e) => {
+            setFirstName(e.target.value);
+            console.log(e.target.value);
+          }}
+        />
+        <input
+          type="text"
+          placeholder="insert Last name"
+          onChange={(e) => {
+            setLastName(e.target.value);
+            console.log(e.target.value);
+          }}
+        />
+        <GenericButton
+          text="Submit"
+          handleClick={() =>
+            postUser(process.env.REACT_APP_BACKEND_URL, newUser)
+          }
+        />
       </Box>
     )
   );
 }
 
 export default ProfileInfo;
+
+//creating a new user based on user.nickname from Auth0 user obj, and other information that the user will give us on the profile page
+
+//new User object state
