@@ -20,4 +20,7 @@ export async function getEventById(URL, eventId, onSuccess) {
 //get group with group id✅
 //get events that user will attend with id✅
 //sort by time, access earliest
+//get events user will attend (eventsWillAttend array)
+//use a reduce function to get earliest timec closest to current time
+
 //post user if they don't exist
