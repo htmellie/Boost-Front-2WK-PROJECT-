@@ -1,108 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React from 'react';
 
-import LogoutButton from "../LogoutButton";
-import { Box, Grid, GridItem, HStack } from "@chakra-ui/react";
-import GenericButton from "../GenericButton";
-import { useAuth0 } from "@auth0/auth0-react";
-import {
-  getUserByUsername,
-  getGroupById,
-  getEventById,
-} from "../../Libs/httpRequests";
+import { Grid, HStack } from '@chakra-ui/react';
+import GenericButton from '../GenericButton';
+import ProfileInfo from 'Components/ProfileInfo';
 
 function ProfilePage() {
-  const { user, isAuthenticated, isLoading } = useAuth0();
-
-  const [databaseUser, setDatabaseUser] = useState(null);
-  const [partOfGroup, setPartOfGroup] = useState(null);
-  const [eventsWillAttend, setEventsWillAttend] = useState([]);
-  const [nextEvent, setNextEvent] = useState(null);
-
-  //console.log(user);
-
-  useEffect(() => {
-    getUserByUsername(
-      process.env.REACT_APP_BACKEND_URL,
-      user.nickname,
-      setDatabaseUser
-    );
-  }, [isAuthenticated]);
-
-  //check if db user is an object, if not, do a post request
-
-  useEffect(() => {
-    getGroupById(
-      process.env.REACT_APP_BACKEND_URL,
-      databaseUser?.partOfGroupId,
-      setPartOfGroup
-    );
-
-    databaseUser?.eventsIds.forEach((id) =>
-      getEventById(process.env.REACT_APP_BACKEND_URL, id, (data) =>
-        setEventsWillAttend([...eventsWillAttend, data])
-      )
-    );
-  }, [databaseUser]);
-
-  // useEffect(() => {
-  //   const futureEvents = eventsWillAttend.filter(
-  //     (event) => new Date(event.time) > new Date(Date.now())
-  //   );
-  //   console.log(futureEvents);
-  //   // setNextEvent(
-  //   //   futureEvents.reduce((acc, cur) =>
-  //   //     new Date(cur.time) < new Date(acc.time) ? cur : acc
-  //   //   )
-  //   // );
-  // }, [eventsWillAttend]);
-
-  if (
-    isLoading ||
-    !databaseUser ||
-    !partOfGroup ||
-    eventsWillAttend.length === 0
-  ) {
-    return <div>Loading</div>;
-  }
-
   return (
-    isAuthenticated && (
-      <Box>
-        <LogoutButton />
-        <Grid
-          placeItems="center"
-          border="4px"
-          borderColor="#FACD60"
-          width="75%"
-          height="75%"
-          margin="auto"
-          mt="5"
-          borderRadius="md"
-        >
-          <GridItem>Welcome, {databaseUser.username}!</GridItem>
-          <GridItem>
-            <img src={user.picture} alt={user.name} />
-          </GridItem>
-          <GridItem>{user.email}</GridItem>
-          <GridItem>Group: {partOfGroup}</GridItem>
-          <GridItem>Next Session:{eventsWillAttend[0].name} </GridItem>
-          <GridItem>Total exercise hours: {databaseUser.hours}</GridItem>
-        </Grid>
-        <Grid placeItems="center" width="75%" height="75%" margin="auto" mt="5">
-          <HStack spacing="2px">
-            <GenericButton
-              text="Create a group"
-              handleClick={() => console.log("click")}
-            ></GenericButton>
+    <>
+      <ProfileInfo />
+      <Grid placeItems="center" width="75%" height="75%" margin="auto" mt="5">
+        <HStack spacing="2px">
+          <GenericButton
+            text="Create a group"
+            handleClick={() => console.log('click')}
+          ></GenericButton>
 
-            <GenericButton
-              text="Join a group"
-              handleClick={() => console.log("click")}
-            ></GenericButton>
-          </HStack>
-        </Grid>
-      </Box>
-    )
+          <GenericButton
+            text="Join a group"
+            handleClick={() => console.log('click')}
+          ></GenericButton>
+        </HStack>
+      </Grid>
+    </>
   );
 }
 

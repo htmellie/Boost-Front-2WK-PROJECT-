@@ -10,16 +10,20 @@ export async function getGroupById(URL, groupId, onSuccess) {
   onSuccess(data.name);
 }
 
-export async function getEventById(URL, eventId, onSuccess) {
+export async function getEventById(URL, eventId) {
   const res = await fetch(`${URL}/events/${eventId}`);
   const data = await res.json();
-  onSuccess(data);
+  return data;
+}
+
+export async function getManyEventsByIds(URL, ids, onSuccess) {
+  onSuccess(await Promise.all(ids.map((id) => getEventById(URL, id))));
 }
 
 export async function postUser(URL, user, onSuccess) {
   const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(user),
   };
   const response = await fetch(`${URL}/users`, requestOptions);
