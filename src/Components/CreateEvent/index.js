@@ -13,7 +13,9 @@ import DateAndTimePickers from "../DateAndTimePicker";
 import ExerciseDropdown from "../ExerciseDropdown";
 import LocationMapPicker from "../LocationMapPicker/index";
 import IntensityDropdown from "../IntensityDropdown";
-import EventNameInput from "Components/EventNameInput";
+import EventNameInput from "../EventNameInput";
+import EventDescriptionInput from '../EventDescriptionInput';
+
 
 const initialEvent = {
   name: "",
@@ -48,6 +50,11 @@ function reducer(event, action) {
         ...event,
         name: action.payload,
       };
+    case "SET_EVENT_DESCRIPTION":
+      return {
+        ...event,
+        description: action.payload,
+      };
     default:
       return event;
   }
@@ -57,7 +64,7 @@ function CreateEvent() {
   const [event, dispatch] = useReducer(reducer, initialEvent);
 
   function checkButtonClicks(num) {
-    console.log(`you clicked ${num}`);
+    console.log(`you submitted ${num}`);
   }
 
   console.log(event);
@@ -72,31 +79,34 @@ function CreateEvent() {
       <VStack>
         <Heading>Create Event</Heading>
         <EventNameInput dispatch={dispatch} />
+
+        <EventDescriptionInput dispatch={dispatch} />
+
         <IntensityDropdown dispatch={dispatch} />
 
-        <GenericButton
+        <ExerciseDropdown dispatch={dispatch} />
+        {/* <GenericButton
           text={"When is your event?"}
           handleClick={() => checkButtonClicks(1)}
-        />
+        /> */}
 
         <DateAndTimePickers dispatch={dispatch} />
-        <GenericButton
+        {/* <GenericButton
           text={"Where is your event?"}
           handleClick={() => checkButtonClicks(2)}
-        />
+        /> */}
 
         <LocationMapPicker dispatch={dispatch} />
 
-        <GenericButton
+        {/* /* <GenericButton
           text={"What do you want to do?"}
           handleClick={() => checkButtonClicks(3)}
-        />
-        <ExerciseDropdown dispatch={dispatch} />
+        /> */}
 
         <GenericButton
           text={"Submit"}
-          handleClick={() => checkButtonClicks(4)}
-        />
+          handleClick={() => checkButtonClicks(event)}
+        /> */
       </VStack>
     </Box>
   );
