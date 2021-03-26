@@ -3,7 +3,8 @@ import GenericButton from "../GenericButton";
 import { Box, Grid, GridItem, HStack, Heading, VStack } from "@chakra-ui/react";
 import DateAndTimePickers from "../TimeAndDatePicker";
 import WhatExercise from "../WhatExercise";
-import EventMap from '../Map'
+import EventMap from '../Map/index';
+
 
 function CreateEvent() {
   function checkButtonClicks(num) {
@@ -25,7 +26,7 @@ function CreateEvent() {
           handleClick={() => checkButtonClicks(2)}
         />
 
-      <EventMap />
+<EventMap />
 
         <GenericButton
           text={"What do you want to do?"}
