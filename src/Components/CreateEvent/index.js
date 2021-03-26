@@ -18,10 +18,13 @@ function CreateEvent() {
 
 const[eventWhen,setEventWhen]=useState();
 
+
 const[eventWhere,setEventWhere]=useState();
 const[eventWhat,setEventWhat]=useState();
   
-
+console.log(eventWhen);
+console.log(eventWhat);
+console.log(eventWhere);
 
   return (
     <Box>
@@ -36,7 +39,7 @@ const[eventWhat,setEventWhat]=useState();
 
 
 
-        <DateAndTimePickers />
+        <DateAndTimePickers setEventWhen={setEventWhen} />
         <GenericButton
           text={"Where is your event?"}
           handleClick={() => checkButtonClicks(2)}
@@ -44,11 +47,11 @@ const[eventWhat,setEventWhat]=useState();
 
 <EventMap />
 
-        <GenericButton
+        <GenericButton 
           text={"What do you want to do?"}
           handleClick={() => checkButtonClicks(3)}
         />
-        <WhatExercise />
+        <WhatExercise setEventWhat={setEventWhat}/>
 
         <GenericButton
           text={"Submit"}
