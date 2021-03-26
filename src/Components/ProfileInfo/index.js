@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Box, Grid, GridItem } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Input } from "@chakra-ui/react";
 import GenericButton from "Components/GenericButton";
 import LogoutButton from "Components/LogoutButton";
 import {
@@ -45,10 +45,10 @@ function ProfileInfo() {
   const [newUser, setNewUser] = useState({
     firstName: "jack",
     surname: "InTheBox",
-    username: "boing",
+    username: "bounce",
     hours: 0,
-    partOfGroupId: 0,
-    adminOfGroupId: 0,
+    partOfGroupId: 2,
+    adminOfGroupId: 2,
     eventsIds: [1, 2],
   });
 
@@ -125,16 +125,14 @@ function ProfileInfo() {
           <GridItem>Next Session:{nextEvent.name} </GridItem>
           <GridItem>Total exercise hours: {databaseUser.hours}</GridItem>
         </Grid>
-        <input
-          type="text"
+        <Input
           placeholder="insert First name"
           onChange={(e) => {
             setFirstName(e.target.value);
             console.log(e.target.value);
           }}
         />
-        <input
-          type="text"
+        <Input
           placeholder="insert Last name"
           onChange={(e) => {
             setLastName(e.target.value);
