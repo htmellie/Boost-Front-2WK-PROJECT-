@@ -8,6 +8,14 @@ import {
   Heading,
   VStack,
   Input,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverHeader,
+  PopoverBody,
+  PopoverCloseButton,
+  Button,
 } from "@chakra-ui/react";
 import DateAndTimePickers from "../DateAndTimePicker";
 import ExerciseDropdown from "../ExerciseDropdown";
@@ -97,16 +105,25 @@ function CreateEvent() {
           text={"What do you want to do?"}
           handleClick={() => checkButtonClicks(3)}
         /> */}
-        <GenericButton
-          text={"Submit"}
-          handleClick={() => {
-            postEvent(process.env.REACT_APP_BACKEND_URL, event);
-            setPopupIsVisible(true);
-          }}
-        />{" "}
-        */
+        <Popover>
+          <PopoverTrigger>
+            <Button
+              onClick={() => {
+                postEvent(process.env.REACT_APP_BACKEND_URL, event);
+              }}
+            >
+              Submit
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            <PopoverHeader>You have made an event!</PopoverHeader>
+            <PopoverBody>Click on the feed to view this event</PopoverBody>
+          </PopoverContent>
+        </Popover>
       </VStack>
-      {popupIsVisible && (
+      {/* {popupIsVisible && (
         <div>
           <h1>You have created an event</h1>
           <GenericButton
@@ -114,7 +131,7 @@ function CreateEvent() {
             handleClick={() => setPopupIsVisible(false)}
           />
         </div>
-      )}
+      )} */}
     </Box>
   );
 }
