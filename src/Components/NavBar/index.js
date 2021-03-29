@@ -7,12 +7,17 @@ function NavBar() {
   return (
     <Flex
       position="fixed"
-      bottom={[0, 0, null]}
-      top={[null, null, 0]}
+      bottom={[0, 0, 0, null]}
+      top={[null, null, null, 0]}
       bg="#edf2f7"
-      flexDirection={['row', 'row', 'column']}
-      justifyContent={['space-between', 'space-between', 'left']}
-      width={['100%', '100%', '20%', '10%']}
+      flexDirection={['row', 'row', 'row', 'column']}
+      justifyContent={[
+        'space-between',
+        'space-between',
+        'space-between',
+        'left',
+      ]}
+      width={['100%', '100%', '100%', '10%']}
     >
       <NavLink to="/">Profile</NavLink>
       <NavLink to="/CreateEvent">Create Event</NavLink>

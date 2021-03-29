@@ -28,8 +28,8 @@ export async function getManyEventsByIds(URL, ids, onSuccess) {
 
 export async function postUser(URL, user, onSuccess) {
   const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(user),
   };
   const response = await fetch(`${URL}/users`, requestOptions);
@@ -40,8 +40,8 @@ export async function postUser(URL, user, onSuccess) {
 export async function postGroup(URL, group, onSuccess) {
   console.log(group);
   const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(group),
   };
   const response = await fetch(`${URL}/groups`, requestOptions);
@@ -49,16 +49,16 @@ export async function postGroup(URL, group, onSuccess) {
   onSuccess(data);
 }
 
-export async function postEvent(URL, event) {
+export async function postEvent(URL, event, onSuccess) {
   console.log(event);
   const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(event),
   };
   const response = await fetch(`${URL}/events`, requestOptions);
   const data = await response.json();
-  // onSuccess(data);
+  onSuccess(data);
 }
 
 //get user with username✅
