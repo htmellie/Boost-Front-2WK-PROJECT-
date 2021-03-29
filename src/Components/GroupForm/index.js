@@ -1,29 +1,45 @@
-import { FormControl, FormLabel, GridItem, Input } from "@chakra-ui/react";
-import GenericButton from "Components/GenericButton";
-import { getGroupByName } from "Libs/httpRequests";
-import { useUserContext } from "Libs/userContext";
-import React, { useEffect, useState } from "react";
+import {
+  FormControl,
+  FormLabel,
+  GridItem,
+  Input,
+  HStack,
+} from '@chakra-ui/react';
+import GenericButton from 'Components/GenericButton';
+import { getGroupByName, updateUser } from 'Libs/httpRequests';
+import { useUserContext } from 'Libs/userContext';
+import React, { useEffect, useState } from 'react';
 
-function GroupForm() {
-  const { setDbUser, dbUser } = useUserContext();
-  const [groupName, setGroupName] = useState("");
+function GroupForm({ userToPost, dispatch }) {
+  const { dbUser, setDbUser } = useUserContext();
+
+  const [groupName, setGroupName] = useState('');
   const [groupExists, setGroupExists] = useState(false);
-  const [groupId, setGroupId] = useState(0);
+  const [toUpdate, setToUpdate] = useState(false);
 
   function handleGroupCheck() {
     getGroupByName(process.env.REACT_APP_BACKEND_URL, groupName, (group) => {
       if (groupName === group.name) {
+        dispatch({ type: 'SET_PART_OF_GROUP_ID', payload: group.id });
         setGroupExists(true);
-        setGroupId(group.id);
       }
     });
   }
 
   useEffect(() => {
-    if (groupExists) {
-      setDbUser({ ...dbUser, partOfGroupId: groupId });
+    if (toUpdate) {
+      updateUser(
+        process.env.REACT_APP_BACKEND_URL,
+        dbUser?.id,
+        userToPost,
+        (user) => {
+          setDbUser(user);
+        }
+      );
     }
-  }, [groupExists]);
+  }, [toUpdate]);
+
+  console.log('this is user id' + dbUser?.id);
 
   return (
     <>
@@ -41,6 +57,29 @@ function GroupForm() {
         </FormControl>
       </GridItem>
       <GenericButton text="Submit" handleClick={handleGroupCheck} />
+      {groupExists && (
+        <GridItem padding="50px 0">
+          <FormControl padding="5px 0" isRequired>
+            <FormLabel>
+              Would you like to join {groupName} at {userToPost.partOfGroupId}?
+            </FormLabel>
+            <HStack>
+              <GenericButton
+                text="Yes"
+                handleClick={() => {
+                  setToUpdate(true);
+                }}
+              />
+              <GenericButton
+                text="No"
+                handleClick={() => {
+                  console.log('no');
+                }}
+              />
+            </HStack>
+          </FormControl>
+        </GridItem>
+      )}
     </>
   );
 }

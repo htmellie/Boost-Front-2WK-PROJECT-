@@ -17,7 +17,7 @@ const UserContext = createContext({
   setDbUser: null,
   eventsWillAttend: null,
   nextEvent: null,
-  dbUser: null
+  dbUser: null,
 });
 
 const initialUserToDisplay = {
@@ -148,7 +148,7 @@ export function UserContextProvider({ children }) {
         setDbUser,
         eventsWillAttend,
         nextEvent,
-        dbUser
+        dbUser,
       }}
     >
       {children}

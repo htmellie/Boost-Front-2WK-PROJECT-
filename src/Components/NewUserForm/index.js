@@ -34,7 +34,6 @@ function reducer(userToPost, action) {
     case 'SET_HOURS':
       return { ...userToPost, hours: action.payload };
     case 'SET_PART_OF_GROUP_ID':
-      console.log(action.payload);
       return { ...userToPost, partOfGroupId: action.payload };
     case 'SET_ADMIN_OF_GROUP_ID':
       return { ...userToPost, adminOfGroupId: action.payload };
@@ -84,7 +83,7 @@ function NewUserForm() {
         Please enter some details to register.
       </Heading>
       {isPosted ? (
-        <GroupForm/>
+        <GroupForm dispatch={dispatch} userToPost={userToPost} />
       ) : (
         <NameInputForm
           handlePost={handlePost}
