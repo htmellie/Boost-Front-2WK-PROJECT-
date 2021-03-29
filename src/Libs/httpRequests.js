@@ -50,7 +50,6 @@ export async function postGroup(URL, group, onSuccess) {
 }
 
 export async function postEvent(URL, event, onSuccess) {
-  console.log(event);
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -71,14 +70,3 @@ export async function updateUser(URL, id, user, onSuccess) {
   const data = await response.json();
   onSuccess(data);
 }
-
-//get user with username✅
-//get group with group id✅
-//get events that user will attend with id✅
-
-//NOT WORKING:
-//sort by time, access earliest
-//get events user will attend (eventsWillAttend array)
-//use a reduce function to get earliest timec closest to current time
-
-//post user if they don't exist

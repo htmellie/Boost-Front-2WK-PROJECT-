@@ -1,10 +1,6 @@
-import { Button } from '@chakra-ui/react';
-import React, {
-  useState,
-  useRef,
-  useMemo,
-} from 'react';
-import { MapContainer, TileLayer, Marker} from 'react-leaflet';
+import { Button } from "@chakra-ui/react";
+import React, { useState, useRef, useMemo } from "react";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
 
 // import 'leaflet/dist/leaflet.css';
 // predetermined long and lat for map
@@ -41,7 +37,7 @@ function LocationMapPicker({ dispatch }) {
   }
 
   const setLocation = () => {
-    dispatch({ type: 'SET_LOCATION', payload: position });
+    dispatch({ type: "SET_LOCATION", payload: position });
   };
 
   return (

@@ -8,6 +8,14 @@ import {
   Heading,
   VStack,
   Input,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverHeader,
+  PopoverBody,
+  PopoverCloseButton,
+  Button,
 } from "@chakra-ui/react";
 import DateAndTimePickers from "../DateAndTimePicker";
 import ExerciseDropdown from "../ExerciseDropdown";
@@ -63,12 +71,13 @@ function reducer(event, action) {
 function CreateEvent() {
   const [event, dispatch] = useReducer(reducer, initialEvent);
   const [popupIsVisible, setPopupIsVisible] = useState(false);
+  const [newEvent, setNewEvent] = useState(initialEvent);
 
   function checkButtonClicks(num) {
     console.log(`you submitted ${num}`);
   }
 
-  console.log(event);
+  console.log(newEvent);
 
   //need text box which updates value
   //need to get lat and long form Eventmap...maybe send down a setstate
@@ -97,16 +106,31 @@ function CreateEvent() {
           text={"What do you want to do?"}
           handleClick={() => checkButtonClicks(3)}
         /> */}
-        <GenericButton
-          text={"Submit"}
-          handleClick={() => {
-            postEvent(process.env.REACT_APP_BACKEND_URL, event);
-            setPopupIsVisible(true);
-          }}
-        />{" "}
-        */
+        <Popover>
+          <PopoverTrigger>
+            <Button
+              onClick={() => {
+                postEvent(
+                  process.env.REACT_APP_BACKEND_URL,
+                  event,
+                  setNewEvent
+                );
+              }}
+            >
+              Submit
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent>
+            <PopoverArrow />
+            <PopoverCloseButton />
+            <PopoverHeader>
+              You have added an event called {newEvent.name}!
+            </PopoverHeader>
+            <PopoverBody>Click on the feed to view this event</PopoverBody>
+          </PopoverContent>
+        </Popover>
       </VStack>
-      {popupIsVisible && (
+      {/* {popupIsVisible && (
         <div>
           <h1>You have created an event</h1>
           <GenericButton
@@ -114,7 +138,7 @@ function CreateEvent() {
             handleClick={() => setPopupIsVisible(false)}
           />
         </div>
-      )}
+      )} */}
     </Box>
   );
 }
