@@ -22,7 +22,7 @@ export async function getEventById(URL, eventId) {
   return data;
 }
 
-export async function getManyEventsByIds(URL, ids, onSuccess) {
+export async function getManyEventsByIds(URL, ids = [], onSuccess) {
   onSuccess(await Promise.all(ids.map((id) => getEventById(URL, id))));
 }
 

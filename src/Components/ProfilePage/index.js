@@ -14,7 +14,8 @@ function ProfilePage() {
   return (
     <Grid placeItems="center" height={['90vh', '90vh', '90vh', '100vh']}>
       {/* <ProfileInfo /> */}
-      {userToDisplay.id ? <ProfileCard {...userToDisplay} /> : <NewUserForm />}
+      {(userToDisplay.id && userToDisplay.group) ? <ProfileCard {...userToDisplay} /> : <NewUserForm />}
+
       <LogoutButton />
 
       <HStack spacing="2px">
