@@ -25,7 +25,7 @@ const initialEvent = {
   latitude: 0,
   time: "0",
   intensity: "",
-  groupId: 0,
+  groupId: 2,
 };
 
 function reducer(event, action) {
@@ -62,6 +62,7 @@ function reducer(event, action) {
 
 function CreateEvent() {
   const [event, dispatch] = useReducer(reducer, initialEvent);
+  const [popupIsVisible, setPopupIsVisible] = useState(false);
 
   function checkButtonClicks(num) {
     console.log(`you submitted ${num}`);
@@ -98,12 +99,22 @@ function CreateEvent() {
         /> */}
         <GenericButton
           text={"Submit"}
-          handleClick={() =>
-            postEvent(process.env.REACT_APP_BACKEND_URL, event)
-          }
+          handleClick={() => {
+            postEvent(process.env.REACT_APP_BACKEND_URL, event);
+            setPopupIsVisible(true);
+          }}
         />{" "}
         */
       </VStack>
+      {popupIsVisible && (
+        <div>
+          <h1>You have created an event</h1>
+          <GenericButton
+            text="Close"
+            handleClick={() => setPopupIsVisible(false)}
+          />
+        </div>
+      )}
     </Box>
   );
 }
