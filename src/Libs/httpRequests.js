@@ -43,6 +43,12 @@ export async function postEvent(URL, event, onSuccess) {
   onSuccess(data);
 }
 
+export async function getEventsByGroupId(URL, groupId, onSuccess) {
+  const res = await fetch(`${URL}/events?groupid=${groupId}`);
+  const data = await res.json();
+  onSuccess(data);
+}
+
 //get user with username✅
 //get group with group id✅
 //get events that user will attend with id✅
