@@ -13,6 +13,7 @@ import { postGroup, getGroupByName, postUser } from 'Libs/httpRequests';
 import { useUserContext } from '../../Libs/userContext';
 import { useAuth0 } from '@auth0/auth0-react';
 import NameInputForm from 'Components/NameInputForm';
+import GroupForm from 'Components/GroupForm';
 const initialUserToPost = {
   firstName: '',
   surname: '',
@@ -83,7 +84,7 @@ function NewUserForm() {
         Please enter some details to register.
       </Heading>
       {isPosted ? (
-        <Heading>Group please</Heading>
+        <GroupForm/>
       ) : (
         <NameInputForm
           handlePost={handlePost}
