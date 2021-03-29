@@ -12,10 +12,23 @@ import {
   VStack,
   WrapItem,
 } from "@chakra-ui/react";
-function EventCard(event) {
-  console.log(event.event.name);
-  const date = event.event.time.slice(0, 10);
-  const time = event.event.time.slice(11, 16);
+import getAddress from '../Geecode/index';
+
+function EventCard({event}) {
+  console.log(event.name);
+  
+  
+  const date=  new Date(event.time).toString().slice(0,15);
+  const time = new Date(event.time).toString().slice(16,21);
+
+  console.log(event);
+
+
+    getAddress();
+
+
+
+
   return (
     <Box>
       <Accordion defaultIndex={[0]} allowMultiple allowToggle>
@@ -23,7 +36,7 @@ function EventCard(event) {
           <h2>
             <AccordionButton>
               <Box flex="1" textAlign="left">
-                {event.event.name}
+                {event.name}
               </Box>
               <AccordionIcon />
             </AccordionButton>
@@ -31,10 +44,10 @@ function EventCard(event) {
           <AccordionPanel pb={4}>
             <WrapItem>Date: {date}</WrapItem>
             <WrapItem>Time: {time}</WrapItem>
-            <WrapItem>Location: {event.event.location}</WrapItem>
-            <WrapItem>Description: {event.event.description}</WrapItem>
-            <WrapItem>Exercise Type: {event.event.exerciseType}</WrapItem>
-            <WrapItem>Intensity: {event.event.intensity}</WrapItem>
+            <WrapItem>Location: {event.location}</WrapItem>
+            <WrapItem>Description: {event.description}</WrapItem>
+            <WrapItem>Exercise Type: {event.exerciseType}</WrapItem>
+            <WrapItem>Intensity: {event.intensity}</WrapItem>
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
