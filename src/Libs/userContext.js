@@ -6,9 +6,18 @@ import React, {
   useState,
 } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import { getGroupById, getUserByUsername } from './httpRequests';
+import {
+  getGroupById,
+  getManyEventsByIds,
+  getUserByUsername,
+} from './httpRequests';
 
-const UserContext = createContext({ userToDisplay: null, setDbUser: null });
+const UserContext = createContext({
+  userToDisplay: null,
+  setDbUser: null,
+  eventsWillAttend: null,
+  nextEvent: null,
+});
 
 const initialUserToDisplay = {
   id: null,
@@ -57,8 +66,11 @@ export function UserContextProvider({ children }) {
     eventsIds: [],
   });
   const [userToDisplay, dispatch] = useReducer(reducer, initialUserToDisplay);
-  //set full name and username with auth0 details
-  //then fetches dbUser
+
+  const [eventsWillAttend, setEventsWillAttend] = useState([]);
+  const [nextEvent, setNextEvent] = useState(null);
+
+  //fetch dbUser
   useEffect(() => {
     console.log(auth0User);
     // @ts-ignore
@@ -72,6 +84,7 @@ export function UserContextProvider({ children }) {
     );
     // eslint-disable-next-line
   }, [isAuthenticated]);
+
   //if dbUser exists,
   //set the rest of the details
   useEffect(() => {
@@ -95,22 +108,47 @@ export function UserContextProvider({ children }) {
       dispatch({ type: 'SET_PICTURE', payload: auth0User?.picture });
       // @ts-ignore
       dispatch({ type: 'SET_HOURS', payload: dbUser.hours });
-      if (dbUser.partOfGroupId !== 0 || dbUser.adminOfGroupId !== 0) {
-        getGroupById(
-          process.env.REACT_APP_BACKEND_URL,
-          dbUser.partOfGroupId,
-          (group) => {
-            // @ts-ignore
-            dispatch({ type: 'SET_GROUP', payload: group.name });
-          }
-        );
-      }
+
+      getGroupById(
+        process.env.REACT_APP_BACKEND_URL,
+        dbUser.partOfGroupId,
+        (group) => {
+          // @ts-ignore
+          dispatch({ type: 'SET_GROUP', payload: group.name });
+        }
+      );
+
+      getManyEventsByIds(
+        process.env.REACT_APP_BACKEND_URL,
+        dbUser.eventsIds,
+        setEventsWillAttend
+      );
     }
     // eslint-disable-next-line
   }, [dbUser]);
+
+  useEffect(() => {
+    if (eventsWillAttend.length !== 0) {
+      const futureEvents = eventsWillAttend.filter(
+        (event) => new Date(event.time) > new Date(Date.now())
+      );
+      setNextEvent(
+        futureEvents.reduce((acc, cur) =>
+          new Date(cur.time) < new Date(acc.time) ? cur : acc
+        )
+      );
+    }
+    // eslint-disable-next-line
+  }, [eventsWillAttend]);
+
   return (
     <UserContext.Provider
-      value={{ userToDisplay: userToDisplay, setDbUser: setDbUser }}
+      value={{
+        userToDisplay: userToDisplay,
+        setDbUser: setDbUser,
+        eventsWillAttend: eventsWillAttend,
+        nextEvent: nextEvent,
+      }}
     >
       {children}
     </UserContext.Provider>
