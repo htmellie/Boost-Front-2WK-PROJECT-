@@ -37,7 +37,7 @@ const[exampleEvent,setExampleEvent]=useState([{
   time: "2021-04-11T19:10:25",
   intensity: "easy",
   groupId: 1,
-},
+}
 ]);
 
 
