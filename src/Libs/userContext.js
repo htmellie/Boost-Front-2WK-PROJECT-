@@ -88,7 +88,6 @@ export function UserContextProvider({ children }) {
   //if dbUser exists,
   //set the rest of the details
   useEffect(() => {
-    console.log(dbUser);
     if (dbUser) {
       // @ts-ignore
       dispatch({ type: 'SET_FIRST_NAME', payload: dbUser.firstName });
@@ -144,10 +143,10 @@ export function UserContextProvider({ children }) {
   return (
     <UserContext.Provider
       value={{
-        userToDisplay: userToDisplay,
-        setDbUser: setDbUser,
-        eventsWillAttend: eventsWillAttend,
-        nextEvent: nextEvent,
+        userToDisplay,
+        setDbUser,
+        eventsWillAttend,
+        nextEvent,
       }}
     >
       {children}
