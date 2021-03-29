@@ -5,6 +5,7 @@ import App from "./Components/App";
 import reportWebVitals from "./reportWebVitals";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { ChakraProvider } from "@chakra-ui/react";
+import { UserContextProvider } from "./Libs/userContext";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -14,7 +15,9 @@ ReactDOM.render(
       redirectUri={window.location.origin}
     >
       <ChakraProvider>
-        <App />
+        <UserContextProvider>
+          <App />
+        </UserContextProvider>
       </ChakraProvider>
     </Auth0Provider>
   </React.StrictMode>,
