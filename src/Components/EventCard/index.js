@@ -1,16 +1,20 @@
-import React from 'react';
+import { useState } from "react";
+import React from "react";
+import { Box, Heading, Text } from "@chakra-ui/react";
 
+function EventCard({ event }) {
+  console.log(event.name);
 
-function EventCard(event){
-    console.log(event.event.name);
-    return(
-        <div>
-            <h1>{event.event.name}</h1>
-            <p>{event.event.time}</p>
+  //   const date = new Date(event.event.time); //-> convert to string
+  //   const time = event.event.time.slice(11, 16);
 
-        </div>    
-    )
-
-};
+  return (
+    <Box>
+      <Heading>{event.name}</Heading>
+      {/* <Text>{date}</Text>
+      <Text>{time}</Text> */}
+    </Box>
+  );
+}
 
 export default EventCard;
