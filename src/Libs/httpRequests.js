@@ -1,13 +1,19 @@
 export async function getUserByUsername(URL, username, onSuccess) {
   const res = await fetch(`${URL}/users?username=${username}`);
   const data = await res.json();
-  onSuccess(data[0]);
+  onSuccess(data);
 }
 
 export async function getGroupById(URL, groupId, onSuccess) {
   const res = await fetch(`${URL}/groups/${groupId}`);
   const data = await res.json();
-  onSuccess(data.name);
+  onSuccess(data);
+}
+
+export async function getGroupByName(URL, groupName, onSuccess) {
+  const res = await fetch(`${URL}/groups?name=${groupName}`);
+  const data = await res.json();
+  onSuccess(data[0]);
 }
 
 export async function getEventById(URL, eventId) {
@@ -20,8 +26,7 @@ export async function getManyEventsByIds(URL, ids, onSuccess) {
   onSuccess(await Promise.all(ids.map((id) => getEventById(URL, id))));
 }
 
-export async function postUser(URL, user) {
-  console.log(user);
+export async function postUser(URL, user, onSuccess) {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -29,7 +34,19 @@ export async function postUser(URL, user) {
   };
   const response = await fetch(`${URL}/users`, requestOptions);
   const data = await response.json();
-  // onSuccess(data);
+  onSuccess(data);
+}
+
+export async function postGroup(URL, group, onSuccess) {
+  console.log(group);
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(group),
+  };
+  const response = await fetch(`${URL}/groups`, requestOptions);
+  const data = await response.json();
+  onSuccess(data);
 }
 
 export async function postEvent(URL, event) {

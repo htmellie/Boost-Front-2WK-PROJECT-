@@ -4,11 +4,16 @@ import { Grid, HStack } from "@chakra-ui/react";
 import GenericButton from "../GenericButton";
 import ProfileInfo from "Components/ProfileInfo";
 import NewUserForm from "../NewUserForm";
+import ProfileCard from "Components/ProfileCard";
+import { useUserContext } from "../../Libs/userContext";
 
 function ProfilePage() {
+  const { userToDisplay } = useUserContext();
+
   return (
     <>
-      <ProfileInfo />
+      {/* <ProfileInfo /> */}
+      <ProfileCard {...userToDisplay} />
       <Grid placeItems="center" width="75%" height="75%" margin="auto" mt="5">
         <HStack spacing="2px">
           <GenericButton
