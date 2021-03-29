@@ -71,12 +71,13 @@ function reducer(event, action) {
 function CreateEvent() {
   const [event, dispatch] = useReducer(reducer, initialEvent);
   const [popupIsVisible, setPopupIsVisible] = useState(false);
+  const [newEvent, setNewEvent] = useState(initialEvent);
 
   function checkButtonClicks(num) {
     console.log(`you submitted ${num}`);
   }
 
-  console.log(event);
+  console.log(newEvent);
 
   //need text box which updates value
   //need to get lat and long form Eventmap...maybe send down a setstate
@@ -109,7 +110,11 @@ function CreateEvent() {
           <PopoverTrigger>
             <Button
               onClick={() => {
-                postEvent(process.env.REACT_APP_BACKEND_URL, event);
+                postEvent(
+                  process.env.REACT_APP_BACKEND_URL,
+                  event,
+                  setNewEvent
+                );
               }}
             >
               Submit
@@ -118,7 +123,9 @@ function CreateEvent() {
           <PopoverContent>
             <PopoverArrow />
             <PopoverCloseButton />
-            <PopoverHeader>You have made an event!</PopoverHeader>
+            <PopoverHeader>
+              You have added an event called {newEvent.name}!
+            </PopoverHeader>
             <PopoverBody>Click on the feed to view this event</PopoverBody>
           </PopoverContent>
         </Popover>

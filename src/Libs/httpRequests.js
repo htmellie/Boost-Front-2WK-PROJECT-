@@ -32,8 +32,7 @@ export async function postUser(URL, user) {
   // onSuccess(data);
 }
 
-export async function postEvent(URL, event) {
-  console.log(event);
+export async function postEvent(URL, event, onSuccess) {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -41,7 +40,7 @@ export async function postEvent(URL, event) {
   };
   const response = await fetch(`${URL}/events`, requestOptions);
   const data = await response.json();
-  // onSuccess(data);
+  onSuccess(data);
 }
 
 //get user with username✅
