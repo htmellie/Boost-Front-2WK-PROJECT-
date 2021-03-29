@@ -8,7 +8,7 @@ import { getEventsByGroupId } from "../../Libs/httpRequests";
 function GroupFeed() {
   const [exampleEvents, setExampleEvents] = useState(events);
   const [groupEvents, setGroupEvents] = useState([]);
-  const [groupId, setGroupId] = useState(1);
+  const [groupId, setGroupId] = useState(2);
 
   useEffect(() => {
     getEventsByGroupId(
