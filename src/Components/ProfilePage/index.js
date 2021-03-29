@@ -6,6 +6,8 @@ import ProfileInfo from "Components/ProfileInfo";
 import NewUserForm from "../NewUserForm";
 import ProfileCard from "Components/ProfileCard";
 import { useUserContext } from "../../Libs/userContext";
+import LoginButton from "Components/LoginButton";
+import LogoutButton from "Components/LogoutButton";
 
 function ProfilePage() {
   const { userToDisplay } = useUserContext();
@@ -13,7 +15,8 @@ function ProfilePage() {
   return (
     <>
       {/* <ProfileInfo /> */}
-      <ProfileCard {...userToDisplay} />
+      {userToDisplay.id ? <ProfileCard {...userToDisplay} /> : <NewUserForm />}
+      <LogoutButton/>
       <Grid placeItems="center" width="75%" height="75%" margin="auto" mt="5">
         <HStack spacing="2px">
           <GenericButton
@@ -27,7 +30,6 @@ function ProfilePage() {
           ></GenericButton>
         </HStack>
       </Grid>
-      <NewUserForm />
     </>
   );
 }

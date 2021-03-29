@@ -1,62 +1,94 @@
-import React, { useReducer } from "react";
-import { FormControl, FormLabel, Input } from "@chakra-ui/react";
+import React, { useReducer, useState } from "react";
+import {
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Grid,
+  GridItem,
+  Heading,
+  Input,
+} from "@chakra-ui/react";
 import GenericButton from "Components/GenericButton";
-import { postUser } from "Libs/httpRequests";
-
-const initialUser = {
+import { postGroup, getGroupByName, postUser } from "Libs/httpRequests";
+import { useUserContext } from "../../Libs/userContext";
+import { useAuth0 } from "@auth0/auth0-react";
+const initialUserToPost = {
   firstName: "",
   surname: "",
   username: "",
   hours: 0,
-  partOfGroupId: 0,
-  adminOfGroupId: 0,
+  partOfGroupId: null,
+  adminOfGroupId: null,
   eventsIds: [],
 };
-
-function reducer(user, action) {
+function reducer(userToPost, action) {
   switch (action.type) {
     case "SET_FIRST_NAME":
-      return { ...user, firstName: action.payload };
+      return { ...userToPost, firstName: action.payload };
     case "SET_SURNAME":
-      return { ...user, surname: action.payload };
+      return { ...userToPost, surname: action.payload };
+    case "SET_USERNAME":
+      return { ...userToPost, username: action.payload };
     case "SET_HOURS":
-      return { ...user, hours: action.payload };
+      return { ...userToPost, hours: action.payload };
     case "SET_PART_OF_GROUP_ID":
-      return { ...user, partOfGroupId: action.payload };
+      console.log(action.payload);
+      return { ...userToPost, partOfGroupId: action.payload };
     case "SET_ADMIN_OF_GROUP_ID":
-      return { ...user, adminOfGroupId: action.payload };
+      return { ...userToPost, adminOfGroupId: action.payload };
     case "SET_EVENTS_IDS":
-      return { ...user, eventsIds: action.payload };
+      return { ...userToPost, eventsIds: action.payload };
+    default:
+      return userToPost;
   }
 }
-
 function NewUserForm() {
-  const [user, dispatch] = useReducer(reducer, initialUser);
-  const setFirstName = (e) => {
+  const { user : auth0User } = useAuth0();
+  const { setDbUser } = useUserContext();
+  const [userToPost, dispatch] = useReducer(reducer, initialUserToPost);
+  const handleFirstName = (e) => {
     // @ts-ignore
     dispatch({ type: "SET_FIRST_NAME", payload: e.target.value });
   };
-  const setSurname = (e) => {
+  const handleSurname = (e) => {
     // @ts-ignore
     dispatch({ type: "SET_SURNAME", payload: e.target.value });
   };
-  console.log(user);
+
+  function handlePost() {
+    // @ts-ignore
+    dispatch({ type: "SET_USERNAME", payload: auth0User.nickname });
+    postUser(process.env.REACT_APP_BACKEND_URL, (postedUser) =>{setDbUser(postedUser)});
+  }
+
+  console.log(userToPost);
   return (
-    <>
-      <FormControl isRequired>
-        <FormLabel>First name</FormLabel>
-        <Input placeholder="First name" onChange={setFirstName} />
-      </FormControl>
-      <FormControl isRequired>
-        <FormLabel>Surname</FormLabel>
-        <Input placeholder="Surname" onChange={setSurname} />
-      </FormControl>
+    <Grid
+      boxShadow="lg"
+      padding="30px 50px"
+      borderRadius={[null, "10px"]}
+      width={["100%", "60%"]}
+      maxW="max-content"
+    >
+      <Heading size="xl">Welcome</Heading>
+      <Heading size="sm" color="gray.300">
+        Please enter some details to register.
+      </Heading>
+      <GridItem padding="50px 0">
+        <FormControl padding="5px 0" isRequired>
+          <FormLabel>First name</FormLabel>
+          <Input placeholder="First name" onChange={handleFirstName} />
+        </FormControl>
+        <FormControl padding="5px 0" isRequired>
+          <FormLabel>Surname</FormLabel>
+          <Input placeholder="Surname" onChange={handleSurname} />
+        </FormControl>
+      </GridItem>
       <GenericButton
         text="Submit"
-        handleClick={() => postUser(process.env.REACT_APP_BACKEND_URL, user)}
+        handleClick={ handlePost }
       />
-    </>
+    </Grid>
   );
 }
-
 export default NewUserForm;
