@@ -28,7 +28,7 @@ export default function DateAndTimePickers({ dispatch }) {
         id="datetime-local"
         label="Event Time"
         type="datetime-local"
-        defaultValue="2017-05-24T10:30"
+        defaultValue="2021-01-01T10:30"
         className={classes.textField}
         InputLabelProps={{
           shrink: true,

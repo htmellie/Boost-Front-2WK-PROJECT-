@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useReducer } from "react";
 import GenericButton from "../GenericButton";
 import {
@@ -15,8 +14,8 @@ import ExerciseDropdown from "../ExerciseDropdown";
 import LocationMapPicker from "../LocationMapPicker/index";
 import IntensityDropdown from "../IntensityDropdown";
 import EventNameInput from "../EventNameInput";
-import EventDescriptionInput from '../EventDescriptionInput';
-
+import EventDescriptionInput from "../EventDescriptionInput";
+import { postEvent } from "../../Libs/httpRequests";
 
 const initialEvent = {
   name: "",
@@ -80,34 +79,30 @@ function CreateEvent() {
       <VStack>
         <Heading>Create Event</Heading>
         <EventNameInput dispatch={dispatch} />
-
         <EventDescriptionInput dispatch={dispatch} />
-
         <IntensityDropdown dispatch={dispatch} />
-
         <ExerciseDropdown dispatch={dispatch} />
         {/* <GenericButton
           text={"When is your event?"}
           handleClick={() => checkButtonClicks(1)}
         /> */}
-
         <DateAndTimePickers dispatch={dispatch} />
         {/* <GenericButton
           text={"Where is your event?"}
           handleClick={() => checkButtonClicks(2)}
         /> */}
-
         <LocationMapPicker dispatch={dispatch} />
-
         {/* /* <GenericButton
           text={"What do you want to do?"}
           handleClick={() => checkButtonClicks(3)}
         /> */}
-
         <GenericButton
           text={"Submit"}
-          handleClick={() => checkButtonClicks(event)}
-        /> */
+          handleClick={() =>
+            postEvent(process.env.REACT_APP_BACKEND_URL, event)
+          }
+        />{" "}
+        */
       </VStack>
     </Box>
   );

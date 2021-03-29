@@ -32,6 +32,18 @@ export async function postUser(URL, user) {
   // onSuccess(data);
 }
 
+export async function postEvent(URL, event) {
+  console.log(event);
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(event),
+  };
+  const response = await fetch(`${URL}/events`, requestOptions);
+  const data = await response.json();
+  // onSuccess(data);
+}
+
 //get user with username✅
 //get group with group id✅
 //get events that user will attend with id✅
