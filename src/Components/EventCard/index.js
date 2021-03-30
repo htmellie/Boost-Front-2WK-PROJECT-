@@ -21,6 +21,7 @@ function EventCard({
   description,
   exerciseType,
   intensity,
+  willAttend
   id,
 }) {
   const date = new Date(time).toString().slice(0, 15);
@@ -57,18 +58,18 @@ function EventCard({
       setAddress
     );
   }, []);
-
+                                             
   return (
-    <Box>
+    <Box bg={willAttend?"red":"white"}>
       <Accordion defaultIndex={[0]} allowMultiple allowToggle>
-        <AccordionItem>
+        <AccordionItem >
           <h2>
             <AccordionButton>
               <Box flex="1" textAlign="left">
                 {name}
               </Box>
               <AccordionIcon />
-            </AccordionButton>
+            </AccordionButton >
           </h2>
           <AccordionPanel pb={4}>
             <WrapItem>Date: {date}</WrapItem>
