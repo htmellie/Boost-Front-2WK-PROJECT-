@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import React, { useEffect } from 'react';
+import { useState } from "react";
+import React, { useEffect } from "react";
 import {
   Accordion,
   AccordionButton,
@@ -7,12 +7,11 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
-  Heading,
-  Text,
-  VStack,
   WrapItem,
-} from '@chakra-ui/react';
-import { getAddress } from '../../Libs/httpRequests';
+} from "@chakra-ui/react";
+import { getAddress, updateUser } from "../../Libs/httpRequests";
+import GenericButton from "Components/GenericButton";
+import { useUserContext } from "Libs/userContext";
 
 function EventCard({
   name,
@@ -22,17 +21,41 @@ function EventCard({
   description,
   exerciseType,
   intensity,
-  groupId,
+  id,
 }) {
   const date = new Date(time).toString().slice(0, 15);
   const timeOfEvent = new Date(time).toString().slice(16, 21);
 
-  let lng = longitude;
-  let lat = latitude;
+  const { dbUser, setDbUser, eventsWillAttend } = useUserContext();
+
+  const [toUpdateUser, setToUpdateUser] = useState(false);
+  const [userToUpdate, setUserToUpdate] = useState(dbUser);
+
+  function handleClick() {
+    setUserToUpdate({ ...dbUser, eventsIds: [...dbUser?.eventsIds, id] });
+    setToUpdateUser(true);
+  }
+  console.log(userToUpdate);
+
+  useEffect(() => {
+    if (toUpdateUser) {
+      updateUser(
+        process.env.REACT_APP_BACKEND_URL,
+        dbUser?.id,
+        userToUpdate,
+        setDbUser
+      );
+    }
+  }, [toUpdateUser]);
 
   const [address, setAddress] = useState([]);
   useEffect(() => {
-    getAddress(process.env.REACT_APP_NOMINATIM_URL, lat, lng, setAddress);
+    getAddress(
+      process.env.REACT_APP_NOMINATIM_URL,
+      latitude,
+      longitude,
+      setAddress
+    );
   }, []);
 
   return (
@@ -56,6 +79,10 @@ function EventCard({
             <WrapItem>Description: {description}</WrapItem>
             <WrapItem>Exercise Type: {exerciseType}</WrapItem>
             <WrapItem>Intensity: {intensity}</WrapItem>
+            <GenericButton
+              text="Attend"
+              handleClick={handleClick}
+            ></GenericButton>
           </AccordionPanel>
         </AccordionItem>
       </Accordion>

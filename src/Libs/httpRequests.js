@@ -65,9 +65,13 @@ export async function postEvent(URL, event, onSuccess) {
 }
 
 export async function getEventsByGroupId(URL, groupId, onSuccess) {
-  const res = await fetch(`${URL}/events?groupid=${groupId}`);
-  const data = await res.json();
-  onSuccess(data);
+  try {
+    const res = await fetch(`${URL}/events?groupid=${groupId}`);
+    const data = await res.json();
+    onSuccess(data);
+  } catch {
+    console.log("no events for this group");
+  }
 }
 
 export async function updateUser(URL, id, user, onSuccess) {
