@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Heading } from "@chakra-ui/layout";
-import { Box } from "@material-ui/core";
+import { Heading, Grid } from "@chakra-ui/layout";
 import EventCard from "../EventCard/index";
 import { getEventsByGroupId } from "../../Libs/httpRequests";
 import { useUserContext } from "Libs/userContext";
@@ -18,7 +17,7 @@ function GroupFeed() {
   }, []);
 
   return (
-    <Box>
+    <Grid placeItems="center" height={["90vh", "90vh", "90vh", "100vh"]}>
       <Heading>Group Feed</Heading>
       {eventsWillAttend.map((event) => (
         <EventCard
@@ -38,7 +37,7 @@ function GroupFeed() {
           groupEvents={groupEvents}
         />
       ))}
-    </Box>
+    </Grid>
   );
 }
 
