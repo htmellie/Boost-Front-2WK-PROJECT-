@@ -5,41 +5,35 @@ import { MapContainer, TileLayer, Marker } from "react-leaflet";
 // import 'leaflet/dist/leaflet.css';
 // predetermined long and lat for map
 function LocationMapPicker({ dispatch }) {
+  const [mapPosition, setMapPosition] = useState([52.505, -0.09]);
 
-
-const[mapPosition,setMapPosition]=useState([52.505,-0.09]);
-
-
-
-useEffect(()=> {
-  function getDevicePosition(){
-    navigator.geolocation.getCurrentPosition( async position=>{
-      const lat= position.coords.latitude;
-      const long=position.coords.longitude;
-      console.log(`this is JJ's location ${lat},${long}`);
-      setMapPosition([lat,long]);
-      console.log(`this is map position after setting it ${mapPosition}`);
-    })
-  }
-  getDevicePosition();
-} ,mapPosition);
-
-
-  
-   
-
-
-
+  useEffect(() => {
+    function getDevicePosition() {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const lat = position.coords.latitude;
+        const long = position.coords.longitude;
+        console.log(`this is JJ's location ${lat},${long}`);
+        setMapPosition([lat, long]);
+        console.log(`this is map position after setting it ${mapPosition}`);
+      });
+    }
+    getDevicePosition();
+  }, []);
 
   const center = {
     lat: mapPosition[0],
     lng: mapPosition[1],
   };
 
-console.log(center.lat);
-console.log(center.lng);
+  console.log(center.lat);
+  console.log(center.lng);
 
   const [position, setPosition] = useState(center);
+
+  useEffect(() => {
+    setPosition({ lat: mapPosition[0], lng: mapPosition[1] });
+  }, [mapPosition]);
+
   // makes the marker draggable to choose a location for event
   function DraggableMarker() {
     const markerRef = useRef(null);
