@@ -1,13 +1,8 @@
-import React, { useState, useEffect, useReducer } from "react";
-import GenericButton from "../GenericButton";
+import React, { useState, useEffect, useReducer } from 'react';
 import {
   Box,
-  Grid,
-  GridItem,
-  HStack,
   Heading,
   VStack,
-  Input,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -16,52 +11,58 @@ import {
   PopoverBody,
   PopoverCloseButton,
   Button,
-} from "@chakra-ui/react";
-import DateAndTimePickers from "../DateAndTimePicker";
-import ExerciseDropdown from "../ExerciseDropdown";
-import LocationMapPicker from "../LocationMapPicker/index";
-import IntensityDropdown from "../IntensityDropdown";
-import EventNameInput from "../EventNameInput";
-import EventDescriptionInput from "../EventDescriptionInput";
-import { postEvent } from "../../Libs/httpRequests";
+} from '@chakra-ui/react';
+import DateAndTimePickers from '../DateAndTimePicker';
+import ExerciseDropdown from '../ExerciseDropdown';
+import LocationMapPicker from '../LocationMapPicker/index';
+import IntensityDropdown from '../IntensityDropdown';
+import EventNameInput from '../EventNameInput';
+import EventDescriptionInput from '../EventDescriptionInput';
+import { postEvent } from '../../Libs/httpRequests';
+import { useUserContext } from 'Libs/userContext';
 
 const initialEvent = {
-  name: "",
-  description: "",
-  exerciseType: "",
+  name: '',
+  description: '',
+  exerciseType: '',
   longitude: 0,
   latitude: 0,
-  time: "0",
-  intensity: "",
+  time: '0',
+  intensity: '',
   groupId: 2,
 };
 
 function reducer(event, action) {
   switch (action.type) {
-    case "SET_EXERCISE":
+    case 'SET_EXERCISE':
       return { ...event, exerciseType: action.payload };
-    case "SET_DATE_AND_TIME":
+    case 'SET_DATE_AND_TIME':
       return { ...event, time: action.payload };
-    case "SET_LOCATION":
+    case 'SET_LOCATION':
       return {
         ...event,
         longitude: action.payload.lng,
         latitude: action.payload.lat,
       };
-    case "SET_INTENSITY":
+    case 'SET_INTENSITY':
       return {
         ...event,
         intensity: action.payload,
       };
-    case "SET_EVENT_NAME":
+    case 'SET_EVENT_NAME':
       return {
         ...event,
         name: action.payload,
       };
-    case "SET_EVENT_DESCRIPTION":
+    case 'SET_EVENT_DESCRIPTION':
       return {
         ...event,
         description: action.payload,
+      };
+    case 'SET_GROUP_ID':
+      return {
+        ...event,
+        groupId: action.payload,
       };
     default:
       return event;
@@ -69,20 +70,22 @@ function reducer(event, action) {
 }
 
 function CreateEvent() {
+  const { dbUser } = useUserContext();
   const [event, dispatch] = useReducer(reducer, initialEvent);
-  const [popupIsVisible, setPopupIsVisible] = useState(false);
   const [newEvent, setNewEvent] = useState(initialEvent);
+  const [toPost, setToPost] = useState(false);
 
-  function checkButtonClicks(num) {
-    console.log(`you submitted ${num}`);
+  function handlePost() {
+    // @ts-ignore
+    dispatch({ type: 'SET_GROUP_ID', payload: dbUser?.partOfGroupId });
+    setToPost(true);
   }
 
-  console.log(newEvent);
-
-  //need text box which updates value
-  //need to get lat and long form Eventmap...maybe send down a setstate
-  //need to get date and time from calander
-  //does the whole thing need to be in a form?
+  useEffect(() => {
+    if (toPost) {
+      postEvent(process.env.REACT_APP_BACKEND_URL, event, setNewEvent);
+    }
+  }, [toPost]);
 
   return (
     <Box>
@@ -108,17 +111,7 @@ function CreateEvent() {
         /> */}
         <Popover>
           <PopoverTrigger>
-            <Button
-              onClick={() => {
-                postEvent(
-                  process.env.REACT_APP_BACKEND_URL,
-                  event,
-                  setNewEvent
-                );
-              }}
-            >
-              Submit
-            </Button>
+            <Button onClick={handlePost}>Submit</Button>
           </PopoverTrigger>
           <PopoverContent>
             <PopoverArrow />

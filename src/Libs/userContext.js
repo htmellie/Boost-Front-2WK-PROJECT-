@@ -127,6 +127,7 @@ export function UserContextProvider({ children }) {
     // eslint-disable-next-line
   }, [dbUser]);
 
+
   useEffect(() => {
     if (eventsWillAttend.length !== 0) {
       const futureEvents = eventsWillAttend.filter(
