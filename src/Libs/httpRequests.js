@@ -28,8 +28,8 @@ export async function getManyEventsByIds(URL, ids = [], onSuccess) {
 
 export async function postUser(URL, user, onSuccess) {
   const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(user),
   };
   const response = await fetch(`${URL}/users`, requestOptions);
@@ -40,8 +40,8 @@ export async function postUser(URL, user, onSuccess) {
 export async function postGroup(URL, group, onSuccess) {
   console.log(group);
   const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(group),
   };
   const response = await fetch(`${URL}/groups`, requestOptions);
@@ -51,8 +51,8 @@ export async function postGroup(URL, group, onSuccess) {
 
 export async function postEvent(URL, event, onSuccess) {
   const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(event),
   };
   const response = await fetch(`${URL}/events`, requestOptions);
@@ -61,15 +61,19 @@ export async function postEvent(URL, event, onSuccess) {
 }
 
 export async function getEventsByGroupId(URL, groupId, onSuccess) {
-  const res = await fetch(`${URL}/events?groupid=${groupId}`);
-  const data = await res.json();
-  onSuccess(data);
+  try {
+    const res = await fetch(`${URL}/events?groupid=${groupId}`);
+    const data = await res.json();
+    onSuccess(data);
+  } catch {
+    console.log("no events for this group");
+  }
 }
 
 export async function updateUser(URL, id, user, onSuccess) {
   const requestOptions = {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(user),
   };
   const response = await fetch(`${URL}/users/${id}`, requestOptions);
@@ -85,6 +89,6 @@ export async function getAddress(URL, lat, lng, onSuccess) {
     let data = await response.json();
     onSuccess([data.address.road, data.address.city, data.address.postcode]);
   } catch {
-    console.log('bad');
+    console.log("bad");
   }
 }
