@@ -5,7 +5,7 @@ import { MapContainer, TileLayer, Marker } from "react-leaflet";
 // import 'leaflet/dist/leaflet.css';
 // predetermined long and lat for map
 function LocationMapPicker({ dispatch }) {
-  const [mapPosition, setMapPosition] = useState([52.505, -0.09]);
+  const [mapPosition, setMapPosition] = useState([52.307528299999994, -1.5126651]);
 
   useEffect(() => {
     function getDevicePosition() {
@@ -67,7 +67,7 @@ function LocationMapPicker({ dispatch }) {
   return (
     //the map rendered
     <>
-      <MapContainer center={center} zoom={13} scrollWheelZoom={false}>
+      <MapContainer center={center} zoom={10} scrollWheelZoom={false}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
