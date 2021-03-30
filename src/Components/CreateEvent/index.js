@@ -68,6 +68,8 @@ function reducer(event, action) {
   }
 }
 
+
+
 function CreateEvent() {
   const [event, dispatch] = useReducer(reducer, initialEvent);
   const [popupIsVisible, setPopupIsVisible] = useState(false);
@@ -78,7 +80,7 @@ function CreateEvent() {
   }
 
   console.log(newEvent);
-
+  console.log(event);
   //need text box which updates value
   //need to get lat and long form Eventmap...maybe send down a setstate
   //need to get date and time from calander
