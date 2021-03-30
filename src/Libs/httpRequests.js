@@ -77,3 +77,11 @@ export async function updateUser(URL, id, user, onSuccess) {
   onSuccess(data);
 }
 
+export async function getAddress(URL, lat, lng, onSuccess) {
+  let response = await fetch(
+    `${URL}/reverse?format=jsonv2&lat=${lat}&lon=${lng}`
+  );
+  let data = await response.json();
+  console.log(data);
+  onSuccess([data.address.road, data.address.city, data.address.postcode]);
+}
