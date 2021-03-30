@@ -1,5 +1,5 @@
-import { useState } from "react";
-import React from "react";
+import { useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Accordion,
   AccordionButton,
@@ -11,23 +11,29 @@ import {
   Text,
   VStack,
   WrapItem,
-} from "@chakra-ui/react";
-import getAddress from '../Geecode/index';
+} from '@chakra-ui/react';
+import { getAddress } from '../../Libs/httpRequests';
 
-function EventCard({event}) {
-  console.log(event.name);
-  
-  
-  const date=  new Date(event.time).toString().slice(0,15);
-  const time = new Date(event.time).toString().slice(16,21);
+function EventCard({
+  name,
+  time,
+  longitude,
+  latitude,
+  description,
+  exerciseType,
+  intensity,
+  groupId,
+}) {
+  const date = new Date(time).toString().slice(0, 15);
+  const timeOfEvent = new Date(time).toString().slice(16, 21);
 
-  console.log(event);
+  let lng = longitude;
+  let lat = latitude;
 
-
-    getAddress();
-
-
-
+  const [address, setAddress] = useState([]);
+  useEffect(() => {
+    getAddress(process.env.REACT_APP_NOMINATIM_URL, lat, lng, setAddress);
+  }, []);
 
   return (
     <Box>
@@ -36,18 +42,20 @@ function EventCard({event}) {
           <h2>
             <AccordionButton>
               <Box flex="1" textAlign="left">
-                {event.name}
+                {name}
               </Box>
               <AccordionIcon />
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
             <WrapItem>Date: {date}</WrapItem>
-            <WrapItem>Time: {time}</WrapItem>
-            <WrapItem>Location: {event.location}</WrapItem>
-            <WrapItem>Description: {event.description}</WrapItem>
-            <WrapItem>Exercise Type: {event.exerciseType}</WrapItem>
-            <WrapItem>Intensity: {event.intensity}</WrapItem>
+            <WrapItem>Time: {timeOfEvent}</WrapItem>
+            <WrapItem>
+              Location: {address[0]}, {address[1]}, {address[2]}
+            </WrapItem>
+            <WrapItem>Description: {description}</WrapItem>
+            <WrapItem>Exercise Type: {exerciseType}</WrapItem>
+            <WrapItem>Intensity: {intensity}</WrapItem>
           </AccordionPanel>
         </AccordionItem>
       </Accordion>

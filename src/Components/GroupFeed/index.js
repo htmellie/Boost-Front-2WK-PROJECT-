@@ -22,7 +22,7 @@ function GroupFeed() {
       <Heading>Group Feed</Heading>
 
       {groupEvents.map((event) => (
-        <EventCard event={event} />
+        <EventCard {...event} />
       ))}
     </Box>
   );

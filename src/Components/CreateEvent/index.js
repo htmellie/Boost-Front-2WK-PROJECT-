@@ -69,6 +69,8 @@ function reducer(event, action) {
   }
 }
 
+
+
 function CreateEvent() {
   const { dbUser } = useUserContext();
   const [event, dispatch] = useReducer(reducer, initialEvent);
