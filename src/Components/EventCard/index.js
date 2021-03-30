@@ -21,13 +21,15 @@ function EventCard({
   description,
   exerciseType,
   intensity,
-  willAttend
+  willAttend,
   id,
+  setGroupEvents,
+  groupEvents,
 }) {
   const date = new Date(time).toString().slice(0, 15);
   const timeOfEvent = new Date(time).toString().slice(16, 21);
 
-  const { dbUser, setDbUser, eventsWillAttend } = useUserContext();
+  const { dbUser, setDbUser } = useUserContext();
 
   const [toUpdateUser, setToUpdateUser] = useState(false);
   const [userToUpdate, setUserToUpdate] = useState(dbUser);
@@ -44,7 +46,10 @@ function EventCard({
         process.env.REACT_APP_BACKEND_URL,
         dbUser?.id,
         userToUpdate,
-        setDbUser
+        (data) => {
+          setGroupEvents(groupEvents.filter((event) => event.id !== id));
+          setDbUser(data);
+        }
       );
     }
   }, [toUpdateUser]);
@@ -58,18 +63,18 @@ function EventCard({
       setAddress
     );
   }, []);
-                                             
+
   return (
-    <Box bg={willAttend?"red":"white"}>
+    <Box bg={willAttend ? "lightgreen" : "white"}>
       <Accordion defaultIndex={[0]} allowMultiple allowToggle>
-        <AccordionItem >
+        <AccordionItem>
           <h2>
             <AccordionButton>
               <Box flex="1" textAlign="left">
                 {name}
               </Box>
               <AccordionIcon />
-            </AccordionButton >
+            </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
             <WrapItem>Date: {date}</WrapItem>
@@ -83,6 +88,7 @@ function EventCard({
             <GenericButton
               text="Attend"
               handleClick={handleClick}
+              display={willAttend ? "none" : null}
             ></GenericButton>
           </AccordionPanel>
         </AccordionItem>

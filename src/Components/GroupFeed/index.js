@@ -7,7 +7,7 @@ import { useUserContext } from "Libs/userContext";
 
 function GroupFeed() {
   const [groupEvents, setGroupEvents] = useState([]);
-  const { dbUser } = useUserContext();
+  const { dbUser, eventsWillAttend } = useUserContext();
   console.log(dbUser);
   useEffect(() => {
     getEventsByGroupId(
@@ -20,9 +20,23 @@ function GroupFeed() {
   return (
     <Box>
       <Heading>Group Feed</Heading>
-
+      {eventsWillAttend.map((event) => (
+        <EventCard
+          {...event}
+          key={event.id}
+          willAttend={true}
+          setGroupEvents={setGroupEvents}
+          groupEvents={groupEvents}
+        />
+      ))}
       {groupEvents.map((event) => (
-        <EventCard {...event} key={event.id} />
+        <EventCard
+          {...event}
+          key={event.id}
+          willAttend={false}
+          setGroupEvents={setGroupEvents}
+          groupEvents={groupEvents}
+        />
       ))}
     </Box>
   );
