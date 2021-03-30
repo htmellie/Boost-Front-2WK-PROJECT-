@@ -7,12 +7,9 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
-  Heading,
-  Text,
-  VStack,
   WrapItem,
 } from "@chakra-ui/react";
-import { getAddress } from "../../Libs/httpRequests";
+import { getAddress, updateUser } from "../../Libs/httpRequests";
 import GenericButton from "Components/GenericButton";
 import { useUserContext } from "Libs/userContext";
 
@@ -24,33 +21,41 @@ function EventCard({
   description,
   exerciseType,
   intensity,
-  groupId,
   id,
 }) {
   const date = new Date(time).toString().slice(0, 15);
   const timeOfEvent = new Date(time).toString().slice(16, 21);
 
-  const { dbUser } = useUserContext();
+  const { dbUser, setDbUser, eventsWillAttend } = useUserContext();
+
+  const [toUpdateUser, setToUpdateUser] = useState(false);
+  const [userToUpdate, setUserToUpdate] = useState(dbUser);
 
   function handleClick() {
-    console.log(dbUser);
-    //when attending button is clicked,
-    //get existing events array from user context?
-    console.log(`${dbUser.firstName} is attending event with id ${id}`);
-    //dbUser.eventsIds.push(id);
-    //console.log(dbUser.eventsIds);
-    //spread array
-    //check if event id is already in the array
-    //push event id into the array
-    //post array to users table
+    setUserToUpdate({ ...dbUser, eventsIds: [...dbUser?.eventsIds, id] });
+    setToUpdateUser(true);
   }
+  console.log(userToUpdate);
 
-  let lng = longitude;
-  let lat = latitude;
+  useEffect(() => {
+    if (toUpdateUser) {
+      updateUser(
+        process.env.REACT_APP_BACKEND_URL,
+        dbUser?.id,
+        userToUpdate,
+        setDbUser
+      );
+    }
+  }, [toUpdateUser]);
 
   const [address, setAddress] = useState([]);
   useEffect(() => {
-    getAddress(process.env.REACT_APP_NOMINATIM_URL, lat, lng, setAddress);
+    getAddress(
+      process.env.REACT_APP_NOMINATIM_URL,
+      latitude,
+      longitude,
+      setAddress
+    );
   }, []);
 
   return (
@@ -75,7 +80,7 @@ function EventCard({
             <WrapItem>Exercise Type: {exerciseType}</WrapItem>
             <WrapItem>Intensity: {intensity}</WrapItem>
             <GenericButton
-              text="Attending"
+              text="Attend"
               handleClick={handleClick}
             ></GenericButton>
           </AccordionPanel>
