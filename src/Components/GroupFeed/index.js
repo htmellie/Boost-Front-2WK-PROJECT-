@@ -10,11 +10,6 @@ function GroupFeed() {
   const [eventsWillNotAttend, setEventsWillNotAttend] = useState([]);
   const { dbUser, eventsWillAttend } = useUserContext();
 
-  console.log({ eventsWillNotAttend });
-  // console.log({ eventsWillAttend });
-  // console.log({ groupEvents });
-
-  // console.log(dbUser);
   useEffect(() => {
     getEventsByGroupId(
       process.env.REACT_APP_BACKEND_URL,
@@ -23,19 +18,8 @@ function GroupFeed() {
     );
   }, []);
 
-  //logic not working
+ 
   useEffect(() => {
-    // groupEvents.forEach((item) => {
-    //   const ItemIndex = eventsWillAttend.findIndex(
-    //     (eventsWillAttend) => eventsWillAttend.name === item.name
-    //   );
-
-    //   // eventsWillNotAttend.splice(ItemIndex, 1)
-    //   setEventsWillNotAttend([
-    //     ...groupEvents.slice(0, ItemIndex),
-    //     ...groupEvents.slice(ItemIndex + 1),
-    //   ]);
-    // });
     setEventsWillNotAttend(
       groupEvents.filter((event) => !dbUser?.eventsIds.includes(event.id))
     );
@@ -49,8 +33,6 @@ function GroupFeed() {
           {...event}
           key={event.id}
           willAttend={true}
-          // setGroupEvents={setGroupEvents}
-          // groupEvents={groupEvents}
         />
       ))}
       {eventsWillNotAttend.map((event) => (
@@ -58,8 +40,6 @@ function GroupFeed() {
           {...event}
           key={event.id}
           willAttend={false}
-          // setGroupEvents={setGroupEvents}
-          // groupEvents={groupEvents}
         />
       ))}
     </Box>
