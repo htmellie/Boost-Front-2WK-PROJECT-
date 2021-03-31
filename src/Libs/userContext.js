@@ -127,15 +127,17 @@ export function UserContextProvider({ children }) {
     // eslint-disable-next-line
   }, [dbUser]);
 
-
   useEffect(() => {
+    console.log({ eventsWillAttend });
     if (eventsWillAttend.length !== 0) {
       const futureEvents = eventsWillAttend.filter(
         (event) => new Date(event.time) > new Date(Date.now())
       );
+
       setNextEvent(
-        futureEvents.reduce((acc, cur) =>
-          new Date(cur.time) < new Date(acc.time) ? cur : acc
+        futureEvents.reduce(
+          (acc, cur) => (new Date(cur.time) < new Date(acc.time) ? cur : acc),
+          futureEvents[0]
         )
       );
     }
