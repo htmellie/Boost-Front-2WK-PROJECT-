@@ -1,20 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { Heading, Grid } from "@chakra-ui/layout";
-import EventCard from "../EventCard/index";
-import { getEventsByGroupId } from "../../Libs/httpRequests";
-import { useUserContext } from "Libs/userContext";
+import React, { useEffect, useState } from 'react';
+import { Heading, Grid } from '@chakra-ui/react';
+import EventCard from '../EventCard/index';
+import { getEventsByGroupId } from '../../Libs/httpRequests';
+import { useUserContext } from 'Libs/userContext';
+
 
 function GroupFeed() {
   const [groupEvents, setGroupEvents] = useState([]);
+  const [eventsWillNotAttend, setEventsWillNotAttend] = useState([]);
   const { dbUser, eventsWillAttend } = useUserContext();
-  console.log(dbUser);
+
   useEffect(() => {
     getEventsByGroupId(
       process.env.REACT_APP_BACKEND_URL,
       dbUser?.partOfGroupId,
       setGroupEvents
     );
+    // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    setEventsWillNotAttend(
+      groupEvents.filter((event) => !dbUser?.eventsIds.includes(event.id))
+    );
+    // eslint-disable-next-line
+  }, [groupEvents, eventsWillAttend]);
 
   return (
     <Grid
@@ -24,22 +34,10 @@ function GroupFeed() {
     >
       <Heading>Group Feed</Heading>
       {eventsWillAttend.map((event) => (
-        <EventCard
-          {...event}
-          key={event.id}
-          willAttend={true}
-          setGroupEvents={setGroupEvents}
-          groupEvents={groupEvents}
-        />
+        <EventCard {...event} key={event.id} willAttend={true} />
       ))}
-      {groupEvents.map((event) => (
-        <EventCard
-          {...event}
-          key={event.id}
-          willAttend={false}
-          setGroupEvents={setGroupEvents}
-          groupEvents={groupEvents}
-        />
+      {eventsWillNotAttend.map((event) => (
+        <EventCard {...event} key={event.id} willAttend={false} />
       ))}
     </Grid>
   );

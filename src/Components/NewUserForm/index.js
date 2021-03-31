@@ -1,15 +1,6 @@
 import React, { useEffect, useReducer, useState } from 'react';
-import {
-  FormControl,
-  FormHelperText,
-  FormLabel,
-  Grid,
-  GridItem,
-  Heading,
-  Input,
-} from '@chakra-ui/react';
-import GenericButton from 'Components/GenericButton';
-import { postGroup, getGroupByName, postUser } from 'Libs/httpRequests';
+import { Grid, Heading } from '@chakra-ui/react';
+import { postUser } from 'Libs/httpRequests';
 import { useUserContext } from '../../Libs/userContext';
 import { useAuth0 } from '@auth0/auth0-react';
 import NameInputForm from 'Components/NameInputForm';
@@ -68,6 +59,7 @@ function NewUserForm() {
   //post user only when username state has changed
   useEffect(() => {
     postUser(process.env.REACT_APP_BACKEND_URL, userToPost, setDbUser);
+    // eslint-disable-next-line
   }, [userToPost.username]);
 
   return (
