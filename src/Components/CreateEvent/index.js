@@ -9,16 +9,15 @@ import {
   PopoverBody,
   PopoverCloseButton,
   Button,
-  Grid
-} from '@chakra-ui/react';
-import DateAndTimePickers from '../DateAndTimePicker';
-import ExerciseDropdown from '../ExerciseDropdown';
-import LocationMapPicker from '../LocationMapPicker/index';
-import IntensityDropdown from '../IntensityDropdown';
-import EventNameInput from '../EventNameInput';
-import EventDescriptionInput from '../EventDescriptionInput';
-import { postEvent } from '../../Libs/httpRequests';
-import { useUserContext } from 'Libs/userContext';
+} from "@chakra-ui/react";
+import DateAndTimePickers from "../DateAndTimePicker";
+import ExerciseDropdown from "../ExerciseDropdown";
+import LocationMapPicker from "../LocationMapPicker";
+import IntensityDropdown from "../IntensityDropdown";
+import EventNameInput from "../EventNameInput";
+import EventDescriptionInput from "../EventDescriptionInput";
+import { postEvent } from "../../Libs/httpRequests";
+import { useUserContext } from "Libs/userContext";
 
 const initialEvent = {
   name: "",
