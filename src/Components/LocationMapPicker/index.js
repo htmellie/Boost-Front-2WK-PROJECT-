@@ -1,41 +1,26 @@
 import { Button } from "@chakra-ui/react";
-import React, { useState, useRef, useMemo, useEffect } from "react";
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
 
-// import 'leaflet/dist/leaflet.css';
-// predetermined long and lat for map
+const { default: React, useEffect, useRef, useMemo } = require("react");
+const { useState } = require("react");
+const {
+  useMapEvents,
+  Popup,
+  Marker,
+  MapContainer,
+  TileLayer,
+} = require("react-leaflet");
+
 function LocationMapPicker({ dispatch }) {
-  const [mapPosition, setMapPosition] = useState([52.307528299999994, -1.5126651]);
+  const [position, setPosition] = useState(null);
+  function LocationMarker() {
+    const map = useMapEvents({
+      locationfound(e) {
+        setPosition(e.latlng);
+        console.log(e.latlng);
+        map.flyTo(e.latlng, map.getZoom());
+      },
+    });
 
-  useEffect(() => {
-    function getDevicePosition() {
-      navigator.geolocation.getCurrentPosition(async (position) => {
-        const lat = position.coords.latitude;
-        const long = position.coords.longitude;
-        console.log(`this is JJ's location ${lat},${long}`);
-        setMapPosition([lat, long]);
-        console.log(`this is map position after setting it ${mapPosition}`);
-      });
-    }
-    getDevicePosition();
-  }, []);
-
-  const center = {
-    lat: mapPosition[0],
-    lng: mapPosition[1],
-  };
-
-  console.log(center.lat);
-  console.log(center.lng);
-
-  const [position, setPosition] = useState(center);
-
-  useEffect(() => {
-    setPosition({ lat: mapPosition[0], lng: mapPosition[1] });
-  }, [mapPosition]);
-
-  // makes the marker draggable to choose a location for event
-  function DraggableMarker() {
     const markerRef = useRef(null);
     const eventHandlers = useMemo(
       () => ({
@@ -50,34 +35,40 @@ function LocationMapPicker({ dispatch }) {
       []
     );
 
-    return (
-      <Marker //the blue marker on page
+    useEffect(() => {
+      map.locate();
+    }, []);
+
+    return position === null ? null : (
+      <Marker
+        position={position}
         draggable={true}
         eventHandlers={eventHandlers}
-        position={position}
         ref={markerRef}
-      ></Marker> //pop up that tells user the maker is draggable
+      >
+        <Popup>You are here</Popup>
+      </Marker>
     );
   }
-
   const setLocation = () => {
     dispatch({ type: "SET_LOCATION", payload: position });
   };
 
   return (
-    //the map rendered
     <>
-      <MapContainer center={center} zoom={10} scrollWheelZoom={false}>
+      <MapContainer
+        center={{ lat: 52.486, lng: -1.89 }}
+        zoom={13}
+        scrollWheelZoom={false}
+      >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <DraggableMarker />
+        <LocationMarker />
       </MapContainer>
       <Button onClick={setLocation}>Set Location</Button>
     </>
   );
 }
-// #mapid { height: 180px; }
-
 export default LocationMapPicker;
