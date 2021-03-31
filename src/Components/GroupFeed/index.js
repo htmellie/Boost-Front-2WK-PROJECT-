@@ -4,6 +4,7 @@ import EventCard from '../EventCard/index';
 import { getEventsByGroupId } from '../../Libs/httpRequests';
 import { useUserContext } from 'Libs/userContext';
 
+
 function GroupFeed() {
   const [groupEvents, setGroupEvents] = useState([]);
   const [eventsWillNotAttend, setEventsWillNotAttend] = useState([]);
@@ -26,7 +27,11 @@ function GroupFeed() {
   }, [groupEvents, eventsWillAttend]);
 
   return (
-    <Grid placeItems="center" height={['90vh', '90vh', '90vh', '100vh']}>
+    <Grid
+      placeItems="center"
+      height={["90vh", "90vh", "90vh", "100vh"]}
+      margin="10%"
+    >
       <Heading>Group Feed</Heading>
       {eventsWillAttend.map((event) => (
         <EventCard {...event} key={event.id} willAttend={true} />

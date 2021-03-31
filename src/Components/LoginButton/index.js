@@ -13,7 +13,7 @@ function LoginButton({ ...props }) {
       onClick={() => loginWithRedirect()}
       {...props}
     >
-      Log In To Boot
+      Log In
     </Button>
   );
 }

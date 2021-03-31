@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer } from "react";
 import {
   Heading,
   Popover,
@@ -9,7 +9,7 @@ import {
   PopoverBody,
   PopoverCloseButton,
   Button,
-  Grid,
+  Grid
 } from '@chakra-ui/react';
 import DateAndTimePickers from '../DateAndTimePicker';
 import ExerciseDropdown from '../ExerciseDropdown';
@@ -21,44 +21,44 @@ import { postEvent } from '../../Libs/httpRequests';
 import { useUserContext } from 'Libs/userContext';
 
 const initialEvent = {
-  name: '',
-  description: '',
-  exerciseType: '',
+  name: "",
+  description: "",
+  exerciseType: "",
   longitude: 0,
   latitude: 0,
-  time: '0',
-  intensity: '',
+  time: "0",
+  intensity: "",
   groupId: 2,
 };
 
 function reducer(event, action) {
   switch (action.type) {
-    case 'SET_EXERCISE':
+    case "SET_EXERCISE":
       return { ...event, exerciseType: action.payload };
-    case 'SET_DATE_AND_TIME':
+    case "SET_DATE_AND_TIME":
       return { ...event, time: action.payload };
-    case 'SET_LOCATION':
+    case "SET_LOCATION":
       return {
         ...event,
         longitude: action.payload.lng,
         latitude: action.payload.lat,
       };
-    case 'SET_INTENSITY':
+    case "SET_INTENSITY":
       return {
         ...event,
         intensity: action.payload,
       };
-    case 'SET_EVENT_NAME':
+    case "SET_EVENT_NAME":
       return {
         ...event,
         name: action.payload,
       };
-    case 'SET_EVENT_DESCRIPTION':
+    case "SET_EVENT_DESCRIPTION":
       return {
         ...event,
         description: action.payload,
       };
-    case 'SET_GROUP_ID':
+    case "SET_GROUP_ID":
       return {
         ...event,
         groupId: action.payload,
@@ -76,7 +76,7 @@ function CreateEvent() {
 
   function handlePost() {
     // @ts-ignore
-    dispatch({ type: 'SET_GROUP_ID', payload: dbUser?.partOfGroupId });
+    dispatch({ type: "SET_GROUP_ID", payload: dbUser?.partOfGroupId });
     setToPost(true);
   }
 
@@ -88,7 +88,9 @@ function CreateEvent() {
   }, [toPost]);
 
   return (
-    <Grid placeItems="center" height={['90vh', '90vh', '90vh', '100vh']}>
+    <Grid placeItems="center" 
+    margin="10%"
+    height={['90vh', '90vh', '90vh', '100vh']}>
       <Heading>Create Event</Heading>
       <EventNameInput dispatch={dispatch} />
       <EventDescriptionInput dispatch={dispatch} />
