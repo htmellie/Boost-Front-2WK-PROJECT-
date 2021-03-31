@@ -9,6 +9,7 @@ import {
   PopoverBody,
   PopoverCloseButton,
   Button,
+  Grid,
 } from "@chakra-ui/react";
 import DateAndTimePickers from "../DateAndTimePicker";
 import ExerciseDropdown from "../ExerciseDropdown";
@@ -87,9 +88,11 @@ function CreateEvent() {
   }, [toPost]);
 
   return (
-    <Grid placeItems="center" 
-    margin="10%"
-    height={['90vh', '90vh', '90vh', '100vh']}>
+    <Grid
+      placeItems="center"
+      margin="10%"
+      height={["90vh", "90vh", "90vh", "100vh"]}
+    >
       <Heading>Create Event</Heading>
       <EventNameInput dispatch={dispatch} />
       <EventDescriptionInput dispatch={dispatch} />
