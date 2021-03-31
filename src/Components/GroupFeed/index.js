@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Heading, Grid } from "@chakra-ui/react";
+import { Heading, Grid, Box } from "@chakra-ui/react";
 import EventCard from "../EventCard/index";
 import { getEventsByGroupId } from "../../Libs/httpRequests";
 import { useUserContext } from "Libs/userContext";
@@ -28,12 +28,10 @@ function GroupFeed() {
   }, [groupEvents, eventsWillAttend]);
 
   return (
-    <Grid
-      placeItems="center"
-      height={["90vh", "90vh", "90vh", "100vh"]}
-      margin="10%"
-    >
-      <Heading>Group Feed</Heading>
+    <Grid>
+      <Heading m="10%" textAlign="center">
+        Group Feed
+      </Heading>
       {eventsWillAttend.map((event) => (
         <EventCard {...event} key={event.id} willAttend={true} />
       ))}

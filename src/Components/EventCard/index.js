@@ -8,6 +8,7 @@ import {
   AccordionPanel,
   Box,
   WrapItem,
+  Grid,
 } from "@chakra-ui/react";
 import { getAddress, updateUser } from "../../Libs/httpRequests";
 import GenericButton from "Components/GenericButton";
@@ -65,18 +66,18 @@ function EventCard({
   }, []);
 
   return (
-    <Box bg={willAttend ? "lightgreen" : "white"}>
+    <Grid bg={willAttend ? "lightgreen" : "white"} margin="0% 10%">
       <Accordion allowToggle>
-        <AccordionItem>
+        <AccordionItem textAlign="center">
           <h2>
-            <AccordionButton>
-              <Box flex="1" textAlign="left">
+            <AccordionButton textAlign="center">
+              <Box flex="1" textAlign="center">
                 {name}
               </Box>
               <AccordionIcon />
             </AccordionButton>
           </h2>
-          <AccordionPanel pb={4}>
+          <AccordionPanel textAlign="left" pb={4}>
             <WrapItem>Date: {date}</WrapItem>
             <WrapItem>Time: {timeOfEvent}</WrapItem>
             <WrapItem>
@@ -93,7 +94,7 @@ function EventCard({
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
-    </Box>
+    </Grid>
   );
 }
 export default EventCard;
