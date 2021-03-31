@@ -1,22 +1,22 @@
-import { Button } from "@chakra-ui/react";
+import React, { useRef, useMemo, useState } from 'react';
 
-const { default: React, useEffect, useRef, useMemo } = require("react");
-const { useState } = require("react");
-const {
-  useMapEvents,
-  Popup,
-  Marker,
-  MapContainer,
-  TileLayer,
-} = require("react-leaflet");
+import { Button } from '@chakra-ui/react';
+import { useMapEvents, Marker, MapContainer, TileLayer } from 'react-leaflet';
 
 function LocationMapPicker({ dispatch }) {
-  const [position, setPosition] = useState(null);
-  function LocationMarker() {
+  const center = {
+    lat: 52.4754,
+    lng: -1.8845,
+  };
+  const [position, setPosition] = useState(center);
+
+  function DraggableMarker() {
     const map = useMapEvents({
+      click() {
+        map.locate();
+      },
       locationfound(e) {
         setPosition(e.latlng);
-        console.log(e.latlng);
         map.flyTo(e.latlng, map.getZoom());
       },
     });
@@ -25,7 +25,6 @@ function LocationMapPicker({ dispatch }) {
     const eventHandlers = useMemo(
       () => ({
         dragend() {
-          //finds the final location of marker
           const marker = markerRef.current;
           if (marker != null) {
             setPosition(marker.getLatLng());
@@ -35,37 +34,28 @@ function LocationMapPicker({ dispatch }) {
       []
     );
 
-    useEffect(() => {
-      map.locate();
-    }, []);
-
-    return position === null ? null : (
+    return (
       <Marker
-        position={position}
         draggable={true}
         eventHandlers={eventHandlers}
+        position={position}
         ref={markerRef}
-      >
-        <Popup>You are here</Popup>
-      </Marker>
+      ></Marker>
     );
   }
+
   const setLocation = () => {
-    dispatch({ type: "SET_LOCATION", payload: position });
+    dispatch({ type: 'SET_LOCATION', payload: position });
   };
 
   return (
     <>
-      <MapContainer
-        center={{ lat: 52.486, lng: -1.89 }}
-        zoom={13}
-        scrollWheelZoom={false}
-      >
+      <MapContainer center={center} zoom={13} scrollWheelZoom={false}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <LocationMarker />
+        <DraggableMarker />
       </MapContainer>
       <Button onClick={setLocation}>Set Location</Button>
     </>
