@@ -18,7 +18,7 @@ function ProfilePage() {
       )}
 
       <LogoutButton />
-      <EventCard {...nextEvent} willAttend={true} />
+      {nextEvent && <EventCard {...nextEvent} willAttend={true} />}
     </Grid>
   );
 }
