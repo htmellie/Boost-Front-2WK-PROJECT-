@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Heading } from '@chakra-ui/layout';
-import { Box } from '@material-ui/core';
-import EventCard from '../EventCard/index';
-import { getEventsByGroupId } from '../../Libs/httpRequests';
-import { useUserContext } from 'Libs/userContext';
+import React, { useEffect, useState } from "react";
+import { Heading } from "@chakra-ui/layout";
+import { Box } from "@material-ui/core";
+import EventCard from "../EventCard/index";
+import { getEventsByGroupId } from "../../Libs/httpRequests";
+import { useUserContext } from "Libs/userContext";
 
 function GroupFeed() {
   const [groupEvents, setGroupEvents] = useState([]);
@@ -11,8 +11,8 @@ function GroupFeed() {
   const { dbUser, eventsWillAttend } = useUserContext();
 
   console.log({ eventsWillNotAttend });
-  console.log({ eventsWillAttend });
-  console.log({ groupEvents });
+  // console.log({ eventsWillAttend });
+  // console.log({ groupEvents });
 
   // console.log(dbUser);
   useEffect(() => {
@@ -23,13 +23,25 @@ function GroupFeed() {
     );
   }, []);
 
+  //logic not working
   useEffect(() => {
-    if (eventsWillAttend.length !== 0) {
-      setEventsWillNotAttend(
-        groupEvents.filter((event) => !eventsWillAttend.includes(event))
+    groupEvents.forEach((item) => {
+      const ItemIndex = eventsWillAttend.findIndex(
+        (eventsWillAttend) => eventsWillAttend.name === item.name
       );
-    }
-  }, [eventsWillAttend]);
+
+      // eventsWillNotAttend.splice(ItemIndex, 1)
+      setEventsWillNotAttend([
+        ...groupEvents.slice(0, ItemIndex),
+        ...groupEvents.slice(ItemIndex + 1),
+      ]);
+    });
+    // setEventsWillNotAttend(
+    //   groupEvents.reduce((acc, cur)=>{
+    //     if(cur.id)
+    //   },groupEvents[0])
+    // );
+  }, [groupEvents, eventsWillAttend]);
 
   return (
     <Box>

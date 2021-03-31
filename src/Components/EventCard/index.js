@@ -36,7 +36,6 @@ function EventCard({
     setUserToUpdate({ ...dbUser, eventsIds: [...dbUser?.eventsIds, id] });
     setToUpdateUser(true);
   }
-  console.log(userToUpdate);
 
   useEffect(() => {
     if (toUpdateUser) {
