@@ -1,7 +1,15 @@
-import React, { useRef, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 
-import { Button } from '@chakra-ui/react';
-import { useMapEvents, Marker, MapContainer, TileLayer } from 'react-leaflet';
+import {
+  Button,
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  GridItem,
+} from '@chakra-ui/react';
+import { MapContainer, TileLayer } from 'react-leaflet';
+
+import DraggableMarker from '../DraggableMarker';
 
 function LocationMapPicker({ dispatch }) {
   const center = {
@@ -10,55 +18,26 @@ function LocationMapPicker({ dispatch }) {
   };
   const [position, setPosition] = useState(center);
 
-  function DraggableMarker() {
-    const map = useMapEvents({
-      click() {
-        map.locate();
-      },
-      locationfound(e) {
-        setPosition(e.latlng);
-        map.flyTo(e.latlng, map.getZoom());
-      },
-    });
-
-    const markerRef = useRef(null);
-    const eventHandlers = useMemo(
-      () => ({
-        dragend() {
-          const marker = markerRef.current;
-          if (marker != null) {
-            setPosition(marker.getLatLng());
-          }
-        },
-      }),
-      []
-    );
-
-    return (
-      <Marker
-        draggable={true}
-        eventHandlers={eventHandlers}
-        position={position}
-        ref={markerRef}
-      ></Marker>
-    );
-  }
-
   const setLocation = () => {
     dispatch({ type: 'SET_LOCATION', payload: position });
   };
 
   return (
-    <>
+    <FormControl padding="5px 0">
+      <FormLabel>Pick your location</FormLabel>
       <MapContainer center={center} zoom={13} scrollWheelZoom={false}>
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <DraggableMarker />
+        <DraggableMarker position={position} setPosition={setPosition} />
       </MapContainer>
+      <FormHelperText>
+        Press the map to find your location, drag the pin to choose your
+        location.
+      </FormHelperText>
       <Button onClick={setLocation}>Set Location</Button>
-    </>
+    </FormControl>
   );
 }
 export default LocationMapPicker;
