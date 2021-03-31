@@ -1,5 +1,5 @@
-import { useState } from "react";
-import React, { useEffect } from "react";
+import { useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Accordion,
   AccordionButton,
@@ -8,10 +8,10 @@ import {
   AccordionPanel,
   Box,
   WrapItem,
-} from "@chakra-ui/react";
-import { getAddress, updateUser } from "../../Libs/httpRequests";
-import GenericButton from "Components/GenericButton";
-import { useUserContext } from "Libs/userContext";
+} from '@chakra-ui/react';
+import { getAddress, updateUser } from '../../Libs/httpRequests';
+import GenericButton from 'Components/GenericButton';
+import { useUserContext } from 'Libs/userContext';
 
 function EventCard({
   name,
@@ -23,8 +23,6 @@ function EventCard({
   intensity,
   willAttend,
   id,
-  setGroupEvents,
-  groupEvents,
 }) {
   const date = new Date(time).toString().slice(0, 15);
   const timeOfEvent = new Date(time).toString().slice(16, 21);
@@ -46,10 +44,7 @@ function EventCard({
         process.env.REACT_APP_BACKEND_URL,
         dbUser?.id,
         userToUpdate,
-        (data) => {
-          setGroupEvents(groupEvents.filter((event) => event.id !== id));
-          setDbUser(data);
-        }
+        setDbUser
       );
     }
   }, [toUpdateUser]);
@@ -65,7 +60,7 @@ function EventCard({
   }, []);
 
   return (
-    <Box bg={willAttend ? "lightgreen" : "white"}>
+    <Box bg={willAttend ? 'lightgreen' : 'white'}>
       <Accordion defaultIndex={[0]} allowMultiple allowToggle>
         <AccordionItem>
           <h2>
@@ -88,7 +83,7 @@ function EventCard({
             <GenericButton
               text="Attend"
               handleClick={handleClick}
-              display={willAttend ? "none" : null}
+              display={willAttend ? 'none' : null}
             ></GenericButton>
           </AccordionPanel>
         </AccordionItem>
