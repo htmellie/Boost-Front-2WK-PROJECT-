@@ -24,8 +24,6 @@ function EventCard({
   intensity,
   willAttend,
   id,
-  setGroupEvents,
-  groupEvents,
 }) {
   const date = new Date(time).toString().slice(0, 15);
   const timeOfEvent = new Date(time).toString().slice(16, 21);
@@ -47,11 +45,8 @@ function EventCard({
         process.env.REACT_APP_BACKEND_URL,
         dbUser?.id,
         userToUpdate,
-        (data) => {
-          setGroupEvents(groupEvents.filter((event) => event.id !== id));
-          setDbUser(data);
-        }
-      );
+          setDbUser
+      )
     }
   }, [toUpdateUser]);
 
@@ -66,7 +61,7 @@ function EventCard({
   }, []);
 
   return (
-    <Grid bg={willAttend ? "lightgreen" : "white"} margin="0% 10%">
+    <Grid bg={willAttend ? "#facd60" : "white"} margin="0% 10%">
       <Accordion allowToggle>
         <AccordionItem textAlign="center">
           <h2>
