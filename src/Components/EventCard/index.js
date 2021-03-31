@@ -1,18 +1,18 @@
-import { useState } from 'react';
-import React, { useEffect } from 'react';
+import { useState } from "react";
+import React, { useEffect } from "react";
 import {
   Accordion,
   AccordionButton,
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
+  Box,
   WrapItem,
-  GridItem,
-  Heading,
-} from '@chakra-ui/react';
-import { getAddress, updateUser } from '../../Libs/httpRequests';
-import GenericButton from 'Components/GenericButton';
-import { useUserContext } from 'Libs/userContext';
+  Grid,
+} from "@chakra-ui/react";
+import { getAddress, updateUser } from "../../Libs/httpRequests";
+import GenericButton from "Components/GenericButton";
+import { useUserContext } from "Libs/userContext";
 
 function EventCard({
   name,
@@ -29,15 +29,15 @@ function EventCard({
   const timeOfEvent = new Date(time).toString().slice(16, 21);
 
   const { dbUser, setDbUser } = useUserContext();
+
   const [toUpdateUser, setToUpdateUser] = useState(false);
   const [userToUpdate, setUserToUpdate] = useState(dbUser);
-
-  const [address, setAddress] = useState([]);
 
   function handleClick() {
     setUserToUpdate({ ...dbUser, eventsIds: [...dbUser?.eventsIds, id] });
     setToUpdateUser(true);
   }
+  console.log(userToUpdate);
 
   useEffect(() => {
     if (toUpdateUser) {
@@ -45,12 +45,12 @@ function EventCard({
         process.env.REACT_APP_BACKEND_URL,
         dbUser?.id,
         userToUpdate,
-        setDbUser
-      );
+          setDbUser
+      )
     }
-    // eslint-disable-next-line
   }, [toUpdateUser]);
 
+  const [address, setAddress] = useState([]);
   useEffect(() => {
     getAddress(
       process.env.REACT_APP_NOMINATIM_URL,
@@ -58,22 +58,21 @@ function EventCard({
       longitude,
       setAddress
     );
-    // eslint-disable-next-line
   }, []);
 
   return (
-    <GridItem
-      width={['90%', '90%', '50%']}
-      bg={willAttend ? 'lightgreen' : 'white'}
-    >
-      <Accordion defaultIndex={[0]} allowMultiple allowToggle>
-        <AccordionItem>
-          <AccordionButton>
-            <Heading size="sm">{name}</Heading>
-            <AccordionIcon textAlign="right" />
-          </AccordionButton>
-
-          <AccordionPanel pb={4}>
+    <Grid bg={willAttend ? "#facd60" : "white"} margin="0% 10%">
+      <Accordion allowToggle>
+        <AccordionItem textAlign="center">
+          <h2>
+            <AccordionButton textAlign="center">
+              <Box flex="1" textAlign="center">
+                {name}
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel textAlign="left" pb={4}>
             <WrapItem>Date: {date}</WrapItem>
             <WrapItem>Time: {timeOfEvent}</WrapItem>
             <WrapItem>
@@ -85,12 +84,12 @@ function EventCard({
             <GenericButton
               text="Attend"
               handleClick={handleClick}
-              display={willAttend ? 'none' : null}
-            />
+              display={willAttend ? "none" : null}
+            ></GenericButton>
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
-    </GridItem>
+    </Grid>
   );
 }
 export default EventCard;
