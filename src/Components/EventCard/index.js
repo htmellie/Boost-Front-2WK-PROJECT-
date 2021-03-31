@@ -6,8 +6,9 @@ import {
   AccordionIcon,
   AccordionItem,
   AccordionPanel,
-  Box,
   WrapItem,
+  GridItem,
+  Heading,
 } from '@chakra-ui/react';
 import { getAddress, updateUser } from '../../Libs/httpRequests';
 import GenericButton from 'Components/GenericButton';
@@ -28,9 +29,10 @@ function EventCard({
   const timeOfEvent = new Date(time).toString().slice(16, 21);
 
   const { dbUser, setDbUser } = useUserContext();
-
   const [toUpdateUser, setToUpdateUser] = useState(false);
   const [userToUpdate, setUserToUpdate] = useState(dbUser);
+
+  const [address, setAddress] = useState([]);
 
   function handleClick() {
     setUserToUpdate({ ...dbUser, eventsIds: [...dbUser?.eventsIds, id] });
@@ -46,9 +48,9 @@ function EventCard({
         setDbUser
       );
     }
+    // eslint-disable-next-line
   }, [toUpdateUser]);
 
-  const [address, setAddress] = useState([]);
   useEffect(() => {
     getAddress(
       process.env.REACT_APP_NOMINATIM_URL,
@@ -56,20 +58,21 @@ function EventCard({
       longitude,
       setAddress
     );
+    // eslint-disable-next-line
   }, []);
 
   return (
-    <Box bg={willAttend ? 'lightgreen' : 'white'}>
+    <GridItem
+      width={['90%', '90%', '50%']}
+      bg={willAttend ? 'lightgreen' : 'white'}
+    >
       <Accordion defaultIndex={[0]} allowMultiple allowToggle>
         <AccordionItem>
-          <h2>
-            <AccordionButton>
-              <Box flex="1" textAlign="left">
-                {name}
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
+          <AccordionButton>
+            <Heading size="sm">{name}</Heading>
+            <AccordionIcon textAlign="right" />
+          </AccordionButton>
+
           <AccordionPanel pb={4}>
             <WrapItem>Date: {date}</WrapItem>
             <WrapItem>Time: {timeOfEvent}</WrapItem>
@@ -83,11 +86,11 @@ function EventCard({
               text="Attend"
               handleClick={handleClick}
               display={willAttend ? 'none' : null}
-            ></GenericButton>
+            />
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
-    </Box>
+    </GridItem>
   );
 }
 export default EventCard;

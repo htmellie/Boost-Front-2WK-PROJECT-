@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Heading } from '@chakra-ui/layout';
-import { Box } from '@material-ui/core';
+import { Heading, Grid } from '@chakra-ui/react';
 import EventCard from '../EventCard/index';
 import { getEventsByGroupId } from '../../Libs/httpRequests';
 import { useUserContext } from 'Libs/userContext';
@@ -16,33 +15,26 @@ function GroupFeed() {
       dbUser?.partOfGroupId,
       setGroupEvents
     );
+    // eslint-disable-next-line
   }, []);
 
- 
   useEffect(() => {
     setEventsWillNotAttend(
       groupEvents.filter((event) => !dbUser?.eventsIds.includes(event.id))
     );
+    // eslint-disable-next-line
   }, [groupEvents, eventsWillAttend]);
 
   return (
-    <Box>
+    <Grid placeItems="center" height={['90vh', '90vh', '90vh', '100vh']}>
       <Heading>Group Feed</Heading>
       {eventsWillAttend.map((event) => (
-        <EventCard
-          {...event}
-          key={event.id}
-          willAttend={true}
-        />
+        <EventCard {...event} key={event.id} willAttend={true} />
       ))}
       {eventsWillNotAttend.map((event) => (
-        <EventCard
-          {...event}
-          key={event.id}
-          willAttend={false}
-        />
+        <EventCard {...event} key={event.id} willAttend={false} />
       ))}
-    </Box>
+    </Grid>
   );
 }
 
