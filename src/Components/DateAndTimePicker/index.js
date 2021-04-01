@@ -1,39 +1,37 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
+import React from 'react';
+import TextField from '@material-ui/core/TextField';
+import { Box, FormControl, FormLabel, Grid } from '@chakra-ui/react';
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: "flex",
-    flexWrap: "wrap",
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 200,
-  },
-}));
-
-export default function DateAndTimePickers({ dispatch }) {
-  const classes = useStyles();
-
+function DateAndTimePickers({ dispatch }) {
   function setDateAndTime(e) {
-    dispatch({ type: "SET_DATE_AND_TIME", payload: e.target.value });
+    dispatch({ type: 'SET_DATE_AND_TIME', payload: e.target.value });
   }
 
+  const currentTime = new Date(Date.now()).toISOString().slice(0, -8);
+
   return (
-    <form className={classes.container} noValidate>
-      <TextField
-        onChange={setDateAndTime}
-        id="datetime-local"
-        label="Event Time"
-        type="datetime-local"
-        defaultValue="2021-01-01T10:30"
-        className={classes.textField}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
-    </form>
+    <FormControl padding="5px 0">
+      <FormLabel marginBottom="5px">Date and time</FormLabel>
+      <Grid
+        border="1px"
+        borderColor="gray.200"
+        borderRadius="7px"
+        padding="10px"
+        placeItems="center"
+      >
+        <TextField
+          onChange={setDateAndTime}
+          id="datetime-local"
+          type="datetime-local"
+          defaultValue={currentTime}
+          fullWidth={true}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+      </Grid>
+    </FormControl>
   );
 }
+
+export default DateAndTimePickers;

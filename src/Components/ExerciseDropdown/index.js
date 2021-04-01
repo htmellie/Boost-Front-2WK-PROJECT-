@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select } from '@chakra-ui/react';
+import { FormControl, FormLabel, Input, Select } from '@chakra-ui/react';
 
 function ExerciseDropdown({ dispatch }) {
   const setExercise = (e) => {
@@ -7,11 +7,15 @@ function ExerciseDropdown({ dispatch }) {
   };
 
   return (
-    <Select placeholder="Select option" onChange={setExercise}>
-      <option value="Run">Run</option>
-      <option value="Cycle">Cycle</option>
-      <option value="Bootcamp">Bootcamp</option>
-    </Select>
+    <FormControl padding="5px 0" isRequired>
+      <FormLabel>Exercise Type</FormLabel>
+      <Select placeholder="Select options" onChange={setExercise}>
+        <option value="Run">Run</option>
+        <option value="Cycle">Cycle</option>
+        <option value="Bootcamp">Bootcamp</option>
+        <option value="Other">Other</option>
+      </Select>
+    </FormControl>
   );
 }
 
