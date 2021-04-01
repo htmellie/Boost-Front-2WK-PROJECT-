@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Heading, Grid, Box, GridItem } from '@chakra-ui/react';
+import { Heading, Grid, GridItem } from '@chakra-ui/react';
 import EventCard from '../EventCard/index';
 import { getEventsByGroupId } from '../../Libs/httpRequests';
 import { useUserContext } from 'Libs/userContext';

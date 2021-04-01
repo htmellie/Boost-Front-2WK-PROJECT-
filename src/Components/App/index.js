@@ -6,8 +6,6 @@ import GroupFeed from '../GroupFeed';
 import { useAuth0 } from '@auth0/auth0-react';
 import LoginPage from '../LoginPage';
 import NavBar from '../NavBar';
-import './App.css';
-import { Box, Flex } from '@chakra-ui/react';
 
 function App() {
   const { isAuthenticated } = useAuth0();

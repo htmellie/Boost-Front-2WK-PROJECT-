@@ -1,6 +1,6 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
-import { Box, FormControl, FormLabel, Grid } from '@chakra-ui/react';
+import {  FormControl, FormLabel, Grid } from '@chakra-ui/react';
 
 function DateAndTimePickers({ dispatch }) {
   function setDateAndTime(e) {

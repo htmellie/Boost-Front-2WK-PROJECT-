@@ -11,7 +11,6 @@ import {
   Button,
   Grid,
   GridItem,
-  Box,
 } from '@chakra-ui/react';
 import DateAndTimePickers from '../DateAndTimePicker';
 import ExerciseDropdown from '../ExerciseDropdown';

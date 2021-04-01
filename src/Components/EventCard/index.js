@@ -8,7 +8,6 @@ import {
   AccordionPanel,
   Box,
   WrapItem,
-  Grid,
   Heading,
   GridItem,
 } from '@chakra-ui/react';
@@ -50,6 +49,7 @@ function EventCard({
         setDbUser
       );
     }
+    // eslint-disable-next-line
   }, [toUpdateUser]);
 
   const [address, setAddress] = useState([]);
@@ -60,6 +60,7 @@ function EventCard({
       longitude,
       setAddress
     );
+    // eslint-disable-next-line
   }, []);
 
   return (

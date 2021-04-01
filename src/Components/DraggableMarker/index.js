@@ -23,6 +23,7 @@ function DraggableMarker({ position, setPosition }) {
         }
       },
     }),
+    // eslint-disable-next-line
     []
   );
 

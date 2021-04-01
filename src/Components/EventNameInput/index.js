@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, GridItem, Input } from '@chakra-ui/react';
+import { FormControl, FormLabel, Input } from '@chakra-ui/react';
 import React from 'react';
 
 function EventNameInput({ dispatch }) {
