@@ -12,8 +12,7 @@ import './App.css';
 
 
 function App() {
-  // const { isAuthenticated } = useAuth0();
-  const isAuthenticated = true;
+  const { isAuthenticated } = useAuth0();
 
   return (
     <Router>
