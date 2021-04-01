@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Heading, Grid, Box } from "@chakra-ui/react";
-import EventCard from "../EventCard/index";
-import { getEventsByGroupId } from "../../Libs/httpRequests";
-import { useUserContext } from "Libs/userContext";
+import React, { useEffect, useState } from 'react';
+import { Heading, Grid, Box, GridItem } from '@chakra-ui/react';
+import EventCard from '../EventCard/index';
+import { getEventsByGroupId } from '../../Libs/httpRequests';
+import { useUserContext } from 'Libs/userContext';
 
 function GroupFeed() {
   const [groupEvents, setGroupEvents] = useState([]);
@@ -28,16 +28,16 @@ function GroupFeed() {
   }, [groupEvents, eventsWillAttend]);
 
   return (
-    <Grid>
-      <Heading m="10%" textAlign="center">
-        Group Feed
-      </Heading>
-      {eventsWillAttend.map((event) => (
-        <EventCard {...event} key={event.id} willAttend={true} />
-      ))}
-      {eventsWillNotAttend.map((event) => (
-        <EventCard {...event} key={event.id} willAttend={false} />
-      ))}
+    <Grid placeItems="center" minH="60vh" mb="100px">
+      <Heading>Group Feed</Heading>
+      <GridItem width={['100%', '80%', '70%', '60%']}>
+        {eventsWillAttend.map((event) => (
+          <EventCard {...event} key={event.id} willAttend={true} />
+        ))}
+        {eventsWillNotAttend.map((event) => (
+          <EventCard {...event} key={event.id} willAttend={false} />
+        ))}
+      </GridItem>
     </Grid>
   );
 }

@@ -10,11 +10,7 @@ function ProfilePage() {
   const { userToDisplay, nextEvent } = useUserContext();
 
   return (
-    <Grid
-      placeItems="center"
-      height={['90vh', '90vh', '90vh', '100vh']}
-      marginBottom="250px"
-    >
+    <Grid placeItems="center" minH="90vh" mb="100px">
       {userToDisplay.id && userToDisplay.group ? (
         <ProfileCard {...userToDisplay} />
       ) : (
