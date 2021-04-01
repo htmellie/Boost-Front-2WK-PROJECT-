@@ -40,6 +40,8 @@ function ProfileCard({
         bg="white"
         margin="10%"
       />
+
+
       <Box
         bg="white"
         padding="5%"
@@ -91,6 +93,7 @@ function ProfileCard({
           </GridItem>
         </GridItem>
       </Box>
+
     </Grid>
   );
 }
