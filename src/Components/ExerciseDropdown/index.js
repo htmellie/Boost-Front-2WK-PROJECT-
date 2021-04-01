@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormControl, FormLabel, Input, Select } from '@chakra-ui/react';
+import { FormControl, FormLabel, Select } from '@chakra-ui/react';
 
 function ExerciseDropdown({ dispatch }) {
   const setExercise = (e) => {

@@ -1,19 +1,16 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
-import { Box, FormControl, FormLabel, Grid } from '@chakra-ui/react';
+import {  FormControl, FormLabel, Grid } from '@chakra-ui/react';
 import { DateTime } from 'luxon';
+
 
 function DateAndTimePickers({ dispatch }) {
   function setDateAndTime(e) {
     dispatch({ type: 'SET_DATE_AND_TIME', payload: e.target.value });
   }
 
- 
   const luxonTime= DateTime.now().toString().slice(0,-13);
  
-
-
-
   return (
     <FormControl padding="5px 0">
       <FormLabel marginBottom="5px">Date and time</FormLabel>

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import React, { useEffect } from "react";
+import { useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Accordion,
   AccordionButton,
@@ -8,11 +8,12 @@ import {
   AccordionPanel,
   Box,
   WrapItem,
-  Grid,
-} from "@chakra-ui/react";
-import { getAddress, updateUser } from "../../Libs/httpRequests";
-import GenericButton from "Components/GenericButton";
-import { useUserContext } from "Libs/userContext";
+  Heading,
+  GridItem,
+} from '@chakra-ui/react';
+import { getAddress, updateUser } from '../../Libs/httpRequests';
+import GenericButton from 'Components/GenericButton';
+import { useUserContext } from 'Libs/userContext';
 
 function EventCard({
   name,
@@ -45,9 +46,10 @@ function EventCard({
         process.env.REACT_APP_BACKEND_URL,
         dbUser?.id,
         userToUpdate,
-          setDbUser
-      )
+        setDbUser
+      );
     }
+    // eslint-disable-next-line
   }, [toUpdateUser]);
 
   const [address, setAddress] = useState([]);
@@ -58,20 +60,20 @@ function EventCard({
       longitude,
       setAddress
     );
+    // eslint-disable-next-line
   }, []);
 
   return (
-    <Grid bg={willAttend ? "#facd60" : "white"} margin="0% 10%">
-      <Accordion allowToggle>
+    <GridItem>
+      <Accordion bg={willAttend ? '#facd60' : 'white'} allowToggle minW="100%">
         <AccordionItem textAlign="center">
-          <h2>
-            <AccordionButton textAlign="center">
-              <Box flex="1" textAlign="center">
-                {name}
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
+          <AccordionButton textAlign="center">
+            <Box flex="1" textAlign="center">
+              <Heading size="sm">{name}</Heading>
+            </Box>
+            <AccordionIcon />
+          </AccordionButton>
+
           <AccordionPanel textAlign="left" pb={4}>
             <WrapItem>Date: {date}</WrapItem>
             <WrapItem>Time: {timeOfEvent}</WrapItem>
@@ -84,12 +86,12 @@ function EventCard({
             <GenericButton
               text="Attend"
               handleClick={handleClick}
-              display={willAttend ? "none" : null}
+              display={willAttend ? 'none' : null}
             ></GenericButton>
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
-    </Grid>
+    </GridItem>
   );
 }
 export default EventCard;

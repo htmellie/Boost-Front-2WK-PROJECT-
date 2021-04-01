@@ -11,7 +11,6 @@ import {
   Button,
   Grid,
   GridItem,
-  Box,
 } from '@chakra-ui/react';
 import DateAndTimePickers from '../DateAndTimePicker';
 import ExerciseDropdown from '../ExerciseDropdown';
@@ -90,10 +89,10 @@ function CreateEvent() {
   }, [toPost]);
 
   return (
-    <Grid placeItems="center" height={['90vh', '90vh', '90vh', '100vh']}>
+    <Grid placeItems="center" minH="90vh" marginBottom="100px">
       <Heading>Create Event</Heading>
 
-      <Box
+      <GridItem
         boxShadow="lg"
         padding="30px 50px"
         borderRadius={[null, '10px']}
@@ -122,8 +121,7 @@ function CreateEvent() {
             <PopoverBody>Click on the feed to view this event</PopoverBody>
           </PopoverContent>
         </Popover>
-
-      </Box>
+      </GridItem>
     </Grid>
   );
 }
