@@ -60,20 +60,20 @@ function ProfileCard({
         </GridItem>
         <GridItem margin="10px 0">
           <HStack>
-            <Text
+            {/* <Text
               className="material-icons"
               color="gray.500"
               fontSize={["1.5em", "1.5em", "2.5em"]}
             >
               schedule
-            </Text>
-            <Heading
+            </Text> */}
+            {/* <Heading
               size="xl"
               color="gray.500"
               fontSize={["1.5em", "1.5em", "2.5em"]}
             >
               {hours + " HOURS"}
-            </Heading>
+            </Heading> */}
           </HStack>
         </GridItem>
       </GridItem>
