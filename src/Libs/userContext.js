@@ -132,7 +132,6 @@ export function UserContextProvider({ children }) {
       const futureEvents = eventsWillAttend.filter(
         (event) => DateTime.fromISO(event.time) > DateTime.now()
       );
-
       setNextEvent(
         futureEvents.reduce(
           (acc, cur) => (new Date(cur.time) < new Date(acc.time) ? cur : acc),

@@ -69,8 +69,8 @@ export async function getEventsByGroupId(URL, groupId, onSuccess) {
     const res = await fetch(`${URL}/events?groupid=${groupId}`);
     const data = await res.json();
     onSuccess(data);
-  } catch {
-    console.log('no events for this group');
+  } catch (error) {
+    console.log(error);
   }
 }
 
@@ -87,12 +87,12 @@ export async function updateUser(URL, id, user, onSuccess) {
 
 export async function getAddress(URL, lat, lng, onSuccess) {
   try {
-    let response = await fetch(
+    const response = await fetch(
       `${URL}/reverse?format=jsonv2&lat=${lat}&lon=${lng}`
     );
-    let data = await response.json();
+    const data = await response.json();
     onSuccess([data.address.road, data.address.city, data.address.postcode]);
-  } catch {
-    console.log('bad longitude and latitude');
+  } catch (error) {
+    console.log(error);
   }
 }
