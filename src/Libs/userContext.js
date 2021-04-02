@@ -11,6 +11,7 @@ import {
   getManyEventsByIds,
   getUserByUsername,
 } from './httpRequests';
+import { DateTime } from 'luxon';
 
 const UserContext = createContext({
   userToDisplay: null,
@@ -73,7 +74,6 @@ export function UserContextProvider({ children }) {
 
   //fetch dbUser
   useEffect(() => {
-    console.log(auth0User);
     // @ts-ignore
     dispatch({ type: 'SET_USERNAME', payload: auth0User?.nickname });
     getUserByUsername(
@@ -128,10 +128,9 @@ export function UserContextProvider({ children }) {
   }, [dbUser]);
 
   useEffect(() => {
-    console.log({ eventsWillAttend });
     if (eventsWillAttend.length !== 0) {
       const futureEvents = eventsWillAttend.filter(
-        (event) => new Date(event.time) > new Date(Date.now())
+        (event) => DateTime.fromISO(event.time) > DateTime.now()
       );
 
       setNextEvent(

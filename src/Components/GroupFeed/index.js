@@ -3,6 +3,7 @@ import { Heading, Grid, GridItem } from '@chakra-ui/react';
 import EventCard from '../EventCard/index';
 import { getEventsByGroupId } from '../../Libs/httpRequests';
 import { useUserContext } from 'Libs/userContext';
+import { DateTime } from 'luxon';
 
 function GroupFeed() {
   const [groupEvents, setGroupEvents] = useState([]);
@@ -21,7 +22,7 @@ function GroupFeed() {
   useEffect(() => {
     setEventsWillNotAttend(
       groupEvents
-        .filter((event) => new Date(event.time) > new Date(Date.now()))
+        .filter((event) => DateTime.fromISO(event.time) > DateTime.now())
         .filter((event) => !dbUser?.eventsIds.includes(event.id))
     );
     // eslint-disable-next-line
