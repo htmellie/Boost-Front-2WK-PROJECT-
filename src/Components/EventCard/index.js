@@ -43,7 +43,7 @@ function EventCard({
     postcode: null,
   });
 
-  function handleClick() {
+  function attendEvent() {
     setUserToUpdate({ ...dbUser, eventsIds: [...dbUser?.eventsIds, id] });
     setToUpdateUser(true);
   }
@@ -92,7 +92,7 @@ function EventCard({
             <WrapItem>Intensity: {intensity}</WrapItem>
             <GenericButton
               text="Attend"
-              handleClick={handleClick}
+              handleClick={attendEvent}
               display={willAttend ? 'none' : null}
             />
           </AccordionPanel>
