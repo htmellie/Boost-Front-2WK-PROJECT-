@@ -8,7 +8,8 @@ import LoginPage from '../LoginPage';
 import NavBar from '../NavBar';
 
 function App() {
-  const { isAuthenticated } = useAuth0();
+  // const { isAuthenticated } = useAuth0();
+  const isAuthenticated = true;
 
   return (
     <Router>

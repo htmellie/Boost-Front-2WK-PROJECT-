@@ -14,10 +14,11 @@ import {
 import { getAddress, updateUser } from '../../Libs/httpRequests';
 import GenericButton from 'Components/GenericButton';
 import { useUserContext } from 'Libs/userContext';
+import { DateTime } from 'luxon';
 
 function EventCard({
   name,
-  time,
+  time: dateTime,
   longitude,
   latitude,
   description,
@@ -26,13 +27,21 @@ function EventCard({
   willAttend,
   id,
 }) {
-  const date = new Date(time).toString().slice(0, 15);
-  const timeOfEvent = new Date(time).toString().slice(16, 21);
+  const date = DateTime.fromISO(dateTime).toHTTP().slice(0, 17);
+  const time = DateTime.fromISO(dateTime)
+    .toLocaleString(DateTime.DATETIME_MED)
+    .slice(13);
 
   const { dbUser, setDbUser } = useUserContext();
 
   const [toUpdateUser, setToUpdateUser] = useState(false);
   const [userToUpdate, setUserToUpdate] = useState(dbUser);
+
+  const [address, setAddress] = useState({
+    road: null,
+    city: null,
+    postcode: null,
+  });
 
   function handleClick() {
     setUserToUpdate({ ...dbUser, eventsIds: [...dbUser?.eventsIds, id] });
@@ -51,7 +60,6 @@ function EventCard({
     // eslint-disable-next-line
   }, [toUpdateUser]);
 
-  const [address, setAddress] = useState([]);
   useEffect(() => {
     getAddress(
       process.env.REACT_APP_NOMINATIM_URL,
@@ -75,9 +83,9 @@ function EventCard({
 
           <AccordionPanel textAlign="left" pb={4}>
             <WrapItem>Date: {date}</WrapItem>
-            <WrapItem>Time: {timeOfEvent}</WrapItem>
+            <WrapItem>Time: {time}</WrapItem>
             <WrapItem>
-              Location: {address[0]}, {address[1]}, {address[2]}
+              Location: {address.road}, {address.city}, {address.postcode}
             </WrapItem>
             <WrapItem>Description: {description}</WrapItem>
             <WrapItem>Exercise Type: {exerciseType}</WrapItem>
@@ -86,7 +94,7 @@ function EventCard({
               text="Attend"
               handleClick={handleClick}
               display={willAttend ? 'none' : null}
-            ></GenericButton>
+            />
           </AccordionPanel>
         </AccordionItem>
       </Accordion>
