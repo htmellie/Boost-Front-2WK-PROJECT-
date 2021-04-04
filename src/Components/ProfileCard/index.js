@@ -6,7 +6,6 @@ import {
   Center,
   Text,
   Link,
-  useColorModeValue,
   Image,
   Flex,
   // HStack,
@@ -27,17 +26,19 @@ function ProfileCard({
   return (
     <Center py={6}>
       <Box
-        maxW="320px"
+        bg="white"
+        minW={['275px', '445px']}
         w="full"
         border="1px solid lightgray"
         boxShadow="xl"
         rounded="md"
         overflow="hidden"
+        mx={1}
       >
         <Image
-          h="120px"
+          h="200px"
           w="full"
-          src="https://picsum.photos/320/120"
+          src="https://picsum.photos/445/200"
           objectFit="cover"
         />
 
@@ -68,11 +69,7 @@ function ProfileCard({
         <Text textAlign="center" fontWeight={600} color="gray.500" mb={4}>
           @{username}
         </Text>
-        <Text
-          textAlign={'center'}
-          color={useColorModeValue('gray.700', 'gray.400')}
-          px={3}
-        >
+        <Text textAlign="center" color="gray.700" px={3}>
           <Heading size="xs" color="gray.400">
             {isAdmin ? 'ADMIN OF' : 'PART OF'}
           </Heading>
