@@ -1,10 +1,9 @@
 import React from 'react';
 import { Grid } from '@chakra-ui/react';
-import NewUserForm from '../NewUserForm';
 import { useUserContext } from '../../Libs/userContext';
-import LogoutButton from 'Components/LogoutButton';
-import ProfileCard from 'Components/ProfileCard';
-import EventCard from 'Components/EventCard';
+import NewUserForm from '../NewUserForm';
+import EventCard from '../EventCard';
+import ProfileCard from '../ProfileCard';
 
 function ProfilePage() {
   const { userToDisplay, nextEvent } = useUserContext();
@@ -17,7 +16,6 @@ function ProfilePage() {
         <NewUserForm />
       )}
 
-      <LogoutButton />
       {nextEvent && <EventCard {...nextEvent} willAttend={true} />}
     </Grid>
   );
