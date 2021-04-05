@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Heading,
   Avatar,
@@ -10,9 +10,9 @@ import {
   Flex,
   // HStack,
   // Grid,
-} from '@chakra-ui/react';
-import { Link as RouterLink } from 'react-router-dom';
-import LogoutButton from 'Components/LogoutButton';
+} from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
+import LogoutButton from "Components/LogoutButton";
 
 function ProfileCard({
   firstName,
@@ -27,9 +27,9 @@ function ProfileCard({
     <Center py={6}>
       <Box
         bg="white"
-        minW={['275px', '445px']}
+        minW={["275px", "445px"]}
         w="full"
-        border="1px solid lightgray"
+        border="0.3px solid lightgrey"
         boxShadow="xl"
         rounded="md"
         overflow="hidden"
@@ -38,11 +38,11 @@ function ProfileCard({
         <Image
           h="200px"
           w="full"
-          src="https://picsum.photos/445/200"
+          src="https://images.unsplash.com/photo-1496163668521-39614a16b23f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1189&q=80"
           objectFit="cover"
         />
 
-        <Flex justify={'center'} mt={-12}>
+        <Flex justify={"center"} mt={-12}>
           <Avatar
             border="2px solid white"
             size="xl"
@@ -54,10 +54,10 @@ function ProfileCard({
               content: '""',
               w: 4,
               h: 4,
-              bg: 'green.300',
-              border: '2px solid white',
-              rounded: 'full',
-              pos: 'absolute',
+              bg: "green.300",
+              border: "2px solid white",
+              rounded: "full",
+              pos: "absolute",
               bottom: 0,
               right: 3,
             }}
@@ -71,9 +71,9 @@ function ProfileCard({
         </Text>
         <Text textAlign="center" color="gray.700" px={3}>
           <Heading size="xs" color="gray.400">
-            {isAdmin ? 'ADMIN OF' : 'PART OF'}
+            {isAdmin ? "ADMIN OF" : "PART OF"}
           </Heading>
-          <Link color="blue.400">
+          <Link color="#1ac0c6">
             <RouterLink to="/GroupFeed">#{group}</RouterLink>
           </Link>
         </Text>
@@ -90,7 +90,7 @@ function ProfileCard({
         </Grid> */}
 
         <Box p={10} textAlign="right">
-          <LogoutButton size="sm" bg="red.300" />
+          <LogoutButton size="sm" bg="#facd60" />
         </Box>
       </Box>
     </Center>

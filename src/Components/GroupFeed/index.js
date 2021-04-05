@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Heading, Grid, GridItem, Center } from '@chakra-ui/react';
-import EventCard from '../EventCard/index';
-import { getEventsByGroupId } from '../../Libs/httpRequests';
-import { useUserContext } from 'Libs/userContext';
-import { DateTime } from 'luxon';
+import React, { useEffect, useState } from "react";
+import { Heading, Grid, GridItem, Center } from "@chakra-ui/react";
+import EventCard from "../EventCard/index";
+import { getEventsByGroupId } from "../../Libs/httpRequests";
+import { useUserContext } from "Libs/userContext";
+import { DateTime } from "luxon";
 
 function GroupFeed() {
   const [groupEvents, setGroupEvents] = useState([]);
@@ -29,12 +29,12 @@ function GroupFeed() {
   }, [groupEvents, eventsWillAttend]);
 
   return (
-    <Center bg="yellow.100">
+    <Center mt="15px" bg="white">
       <Grid placeItems="center" minH="60vh" mb="100px">
         <Heading>Group Feed</Heading>
 
         <GridItem py={5}>
-          <Heading pl={2} size="md" color="gray.300">
+          <Heading pl={2} size="md" color="black">
             Attending Events
           </Heading>
           {eventsWillAttend.map((event) => (
@@ -42,7 +42,7 @@ function GroupFeed() {
           ))}
         </GridItem>
         <GridItem py={5}>
-          <Heading pl={2} size="md" color="gray.300">
+          <Heading pl={2} size="md" color="black">
             Other Events
           </Heading>
           {eventsWillNotAttend.map((event) => (

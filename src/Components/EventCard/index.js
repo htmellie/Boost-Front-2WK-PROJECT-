@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import React, { useEffect } from 'react';
+import { useState } from "react";
+import React, { useEffect } from "react";
 import {
   Accordion,
   AccordionButton,
@@ -13,12 +13,12 @@ import {
   Text,
   HStack,
   Stack,
-} from '@chakra-ui/react';
-import { getAddress, updateUser } from '../../Libs/httpRequests';
-import GenericButton from 'Components/GenericButton';
-import { useUserContext } from 'Libs/userContext';
-import { DateTime } from 'luxon';
-import EventCardWrapper from './wrapper';
+} from "@chakra-ui/react";
+import { getAddress, updateUser } from "../../Libs/httpRequests";
+import GenericButton from "Components/GenericButton";
+import { useUserContext } from "Libs/userContext";
+import { DateTime } from "luxon";
+import EventCardWrapper from "./wrapper";
 
 function EventCard({
   name,
@@ -76,7 +76,11 @@ function EventCard({
   }, []);
 
   return (
-    <EventCardWrapper shortDate={shortDate} willAttend={willAttend}>
+    <EventCardWrapper
+      border="2px solid #1ac0c6"
+      shortDate={shortDate}
+      willAttend={willAttend}
+    >
       <GridItem w="100%">
         <Accordion allowToggle minW="100%">
           <AccordionItem textAlign="center">
@@ -91,11 +95,11 @@ function EventCard({
 
             <AccordionPanel textAlign="left" pb={4}>
               <HStack>
-                <Heading size="xs" color="blue.300">
+                <Heading size="xs" color="#1ac0c6">
                   DATE
                 </Heading>
                 <Text>{date}</Text>
-                <Heading size="xs" color="blue.300">
+                <Heading size="xs" color="#1ac0c6">
                   AT
                 </Heading>
                 <Text>{time}</Text>
@@ -104,26 +108,26 @@ function EventCard({
               <Text my={5}>{description}</Text>
               <WrapItem>
                 <Text fontWeight={500} fontSize="md" color="gray.400">
-                  <span className="material-icons">moving</span>{' '}
+                  <span className="material-icons">moving</span>{" "}
                   {intensity.toUpperCase()}
                 </Text>
               </WrapItem>
               <WrapItem>
                 <Text fontWeight={500} fontSize="md" color="gray.400">
                   <span className="material-icons">fitness_center</span>
-                  {' ' + exerciseType.toUpperCase()}
+                  {" " + exerciseType.toUpperCase()}
                 </Text>
               </WrapItem>
 
               <Text fontWeight={500} fontSize="md" color="gray.400">
-                <span className="material-icons">place</span> {address.road},{' '}
+                <span className="material-icons">place</span> {address.road},{" "}
                 {address.city}, {address.postcode}
               </Text>
               <Box textAlign="right">
                 <GenericButton
                   text="Attend"
                   handleClick={attendEvent}
-                  display={willAttend ? 'none' : null}
+                  display={willAttend ? "none" : null}
                 />
               </Box>
             </AccordionPanel>

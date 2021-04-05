@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 import {
   Button,
@@ -6,10 +6,10 @@ import {
   FormHelperText,
   FormLabel,
   Grid,
-} from '@chakra-ui/react';
-import { MapContainer, TileLayer } from 'react-leaflet';
+} from "@chakra-ui/react";
+import { MapContainer, TileLayer } from "react-leaflet";
 
-import DraggableMarker from '../DraggableMarker';
+import DraggableMarker from "../DraggableMarker";
 
 function LocationMapPicker({ dispatch }) {
   const center = {
@@ -19,15 +19,14 @@ function LocationMapPicker({ dispatch }) {
   const [position, setPosition] = useState(center);
 
   const setLocation = () => {
-    dispatch({ type: 'SET_LOCATION', payload: position });
+    dispatch({ type: "SET_LOCATION", payload: position });
   };
 
   return (
     <FormControl padding="5px 0">
       <FormLabel>Pick your location</FormLabel>
       <Grid
-        border="1px"
-        borderColor="gray.200"
+        border="0.3px solid lightgrey"
         borderRadius="7px"
         padding="10px"
         placeItems="center"
@@ -43,7 +42,9 @@ function LocationMapPicker({ dispatch }) {
           Press the map to find your location, drag the pin to choose your
           location.
         </FormHelperText>
-        <Button onClick={setLocation}>Set Location</Button>
+        <Button bg="#facd60" onClick={setLocation}>
+          Set Location
+        </Button>
       </Grid>
     </FormControl>
   );
