@@ -18,7 +18,7 @@ function NavBar() {
         "left",
       ]}
       width={["100%", "100%", "100%", "10%"]}
-      height={["max-content", "max-content", "max-content", "100%"]}
+      height={["max-content", "max-content", "max-content", "full"]}
     >
       <NavLink to="/">Profile</NavLink>
       <NavLink to="/CreateEvent">Create Event</NavLink>

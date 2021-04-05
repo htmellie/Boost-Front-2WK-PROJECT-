@@ -92,12 +92,13 @@ function CreateEvent() {
     <Grid mt="15px" placeItems="center" minH="90vh" marginBottom="100px">
       <Heading>Create Event</Heading>
 
-      <GridItem
+      <Grid
         boxShadow="lg"
         padding="30px 50px"
         borderRadius={[null, "10px"]}
         width={["100%", "80%", "70%", "60%"]}
         maxW="max-content"
+        placeItems="center"
       >
         <GridItem>
           <EventNameInput dispatch={dispatch} />
@@ -123,7 +124,7 @@ function CreateEvent() {
             <PopoverBody>Click on the feed to view this event</PopoverBody>
           </PopoverContent>
         </Popover>
-      </GridItem>
+      </Grid>
     </Grid>
   );
 }

@@ -28,6 +28,7 @@ function ProfileCard({
       <Box
         bg="white"
         minW={["275px", "445px"]}
+        maxW="445px"
         w="full"
         border="0.3px solid lightgrey"
         boxShadow="xl"

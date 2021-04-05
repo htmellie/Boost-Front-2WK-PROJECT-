@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Center, Flex, Heading, HStack } from "@chakra-ui/react";
+import { Box, Center, Heading, HStack } from "@chakra-ui/react";
 
 function EventCardWrapper({ shortDate, children, willAttend, ...props }) {
   return (

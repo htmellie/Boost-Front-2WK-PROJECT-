@@ -1,5 +1,3 @@
-import { useState } from "react";
-import React, { useEffect } from "react";
 import {
   Accordion,
   AccordionButton,
@@ -7,17 +5,17 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
-  WrapItem,
-  Heading,
   GridItem,
-  Text,
+  Heading,
   HStack,
-  Stack,
+  Text,
+  WrapItem,
 } from "@chakra-ui/react";
-import { getAddress, updateUser } from "../../Libs/httpRequests";
 import GenericButton from "Components/GenericButton";
 import { useUserContext } from "Libs/userContext";
 import { DateTime } from "luxon";
+import React, { useEffect, useState } from "react";
+import { getAddress, updateUser } from "../../Libs/httpRequests";
 import EventCardWrapper from "./wrapper";
 
 function EventCard({

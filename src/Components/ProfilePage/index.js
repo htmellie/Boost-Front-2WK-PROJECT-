@@ -4,7 +4,6 @@ import { useUserContext } from "../../Libs/userContext";
 import NewUserForm from "../NewUserForm";
 import EventCard from "../EventCard";
 import ProfileCard from "../ProfileCard";
-import EventCardWrapper from "Components/EventCard/wrapper";
 
 function ProfilePage() {
   const { userToDisplay, nextEvent } = useUserContext();
