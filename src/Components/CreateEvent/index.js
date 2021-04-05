@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useState, useEffect, useReducer } from "react";
 import {
   Heading,
   Popover,
@@ -11,55 +11,55 @@ import {
   Button,
   Grid,
   GridItem,
-} from '@chakra-ui/react';
-import DateAndTimePickers from '../DateAndTimePicker';
-import ExerciseDropdown from '../ExerciseDropdown';
-import LocationMapPicker from '../LocationMapPicker';
-import IntensityDropdown from '../IntensityDropdown';
-import EventNameInput from '../EventNameInput';
-import EventDescriptionInput from '../EventDescriptionInput';
-import { postEvent } from '../../Libs/httpRequests';
-import { useUserContext } from 'Libs/userContext';
+} from "@chakra-ui/react";
+import DateAndTimePickers from "../DateAndTimePicker";
+import ExerciseDropdown from "../ExerciseDropdown";
+import LocationMapPicker from "../LocationMapPicker";
+import IntensityDropdown from "../IntensityDropdown";
+import EventNameInput from "../EventNameInput";
+import EventDescriptionInput from "../EventDescriptionInput";
+import { postEvent } from "../../Libs/httpRequests";
+import { useUserContext } from "Libs/userContext";
 
 const initialEvent = {
-  name: '',
-  description: '',
-  exerciseType: '',
+  name: "",
+  description: "",
+  exerciseType: "",
   longitude: 0,
   latitude: 0,
-  time: '0',
-  intensity: '',
+  time: "0",
+  intensity: "",
   groupId: 2,
 };
 
 function reducer(event, action) {
   switch (action.type) {
-    case 'SET_EXERCISE':
+    case "SET_EXERCISE":
       return { ...event, exerciseType: action.payload };
-    case 'SET_DATE_AND_TIME':
+    case "SET_DATE_AND_TIME":
       return { ...event, time: action.payload };
-    case 'SET_LOCATION':
+    case "SET_LOCATION":
       return {
         ...event,
         longitude: action.payload.lng,
         latitude: action.payload.lat,
       };
-    case 'SET_INTENSITY':
+    case "SET_INTENSITY":
       return {
         ...event,
         intensity: action.payload,
       };
-    case 'SET_EVENT_NAME':
+    case "SET_EVENT_NAME":
       return {
         ...event,
         name: action.payload,
       };
-    case 'SET_EVENT_DESCRIPTION':
+    case "SET_EVENT_DESCRIPTION":
       return {
         ...event,
         description: action.payload,
       };
-    case 'SET_GROUP_ID':
+    case "SET_GROUP_ID":
       return {
         ...event,
         groupId: action.payload,
@@ -77,7 +77,7 @@ function CreateEvent() {
 
   function handlePost() {
     // @ts-ignore
-    dispatch({ type: 'SET_GROUP_ID', payload: dbUser?.partOfGroupId });
+    dispatch({ type: "SET_GROUP_ID", payload: dbUser?.partOfGroupId });
     setToPost(true);
   }
 
@@ -89,15 +89,16 @@ function CreateEvent() {
   }, [toPost]);
 
   return (
-    <Grid placeItems="center" minH="90vh" marginBottom="100px">
+    <Grid mt="15px" placeItems="center" minH="90vh" marginBottom="100px">
       <Heading>Create Event</Heading>
 
-      <GridItem
+      <Grid
         boxShadow="lg"
         padding="30px 50px"
-        borderRadius={[null, '10px']}
-        width={['100%', '80%', '70%', '60%']}
+        borderRadius={[null, "10px"]}
+        width={["100%", "80%", "70%", "60%"]}
         maxW="max-content"
+        placeItems="center"
       >
         <GridItem>
           <EventNameInput dispatch={dispatch} />
@@ -110,7 +111,9 @@ function CreateEvent() {
 
         <Popover>
           <PopoverTrigger>
-            <Button onClick={handlePost}>Submit</Button>
+            <Button bg="#facd60" onClick={handlePost}>
+              Submit
+            </Button>
           </PopoverTrigger>
           <PopoverContent>
             <PopoverArrow />
@@ -121,7 +124,7 @@ function CreateEvent() {
             <PopoverBody>Click on the feed to view this event</PopoverBody>
           </PopoverContent>
         </Popover>
-      </GridItem>
+      </Grid>
     </Grid>
   );
 }

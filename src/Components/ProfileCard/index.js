@@ -1,13 +1,19 @@
 import React from "react";
 import {
-  Box,
-  Grid,
-  GridItem,
   Heading,
-  HStack,
-  Image,
+  Avatar,
+  Box,
+  Center,
   Text,
+  Link,
+  Image,
+  Flex,
+  // HStack,
+  // Grid,
 } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
+import LogoutButton from "Components/LogoutButton";
+
 function ProfileCard({
   firstName,
   surname,
@@ -18,83 +24,78 @@ function ProfileCard({
   isAdmin,
 }) {
   return (
-    <Grid
-      boxShadow="lg"
-      placeItems="center"
-      padding="30px 30px"
-      borderRadius={["10px", "10px", "10px", "10px"]}
-      bg="#1ac0c6"
-      templateColumns={[null, null, "4fr 5fr"]}
-      transition="0.2s"
-      width={["95%", "70%", "max-content"]}
-      margin="10%"
-    >
-      <Image
-        borderRadius="full"
-        src={picture}
-        alt={firstName}
-        objectFit="cover"
-        boxShadow="md"
-        boxSize={["200px", "200px", "300px"]}
-        padding="0.5em"
-        bg="white"
-        margin="10%"
-      />
-
-
+    <Center py={6}>
       <Box
         bg="white"
-        padding="5%"
-        borderRadius={["10px", "10px", "10px", "10px"]}
+        minW={["275px", "445px"]}
+        maxW="445px"
+        w="full"
+        border="0.3px solid lightgrey"
+        boxShadow="xl"
+        rounded="md"
+        overflow="hidden"
+        mx={1}
       >
-        <GridItem>
-          <GridItem padding="10px 0">
-            <HStack>
-              <Heading
-                size={"xl"}
-                fontSize={["2rem", "2rem", "3rem"]}
-                color="gray.800"
-              >
-                {`${firstName} ${surname}`}
-              </Heading>
-            </HStack>
-            <Text
-              marginTop="-5px"
-              color="gray.400"
-              size="xs"
-              fontSize={["1em", "1em", "1.5em"]}
-            >
-              {"@" + username}
-            </Text>
-          </GridItem>
-          <GridItem padding="10px 0" fontSize={["1em", "1em", "1.2em"]}>
-            <Heading size="xs" color="gray.300">
-              {isAdmin ? "ADMIN" : "PART OF"}
-            </Heading>
-            <Text size="sm">{group}</Text>
-          </GridItem>
-          <GridItem margin="10px 0">
-            <HStack>
-              {/* <Text
-                className="material-icons"
-                color="gray.500"
-                fontSize={["1.5em", "1.5em", "2.5em"]}
-              >
-                schedule
-              </Text>
-              <Heading
-                size="xl"
-                color="gray.500"
-                fontSize={["1.5em", "1.5em", "2.5em"]}
-              >
-                {hours + " HOURS"}
-              </Heading> */}
-            </HStack>
-          </GridItem>
-        </GridItem>
-      </Box>
+        <Image
+          h="200px"
+          w="full"
+          src="https://images.unsplash.com/photo-1496163668521-39614a16b23f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1189&q=80"
+          objectFit="cover"
+        />
 
-    </Grid>
+        <Flex justify={"center"} mt={-12}>
+          <Avatar
+            border="2px solid white"
+            size="xl"
+            src={picture}
+            alt={firstName}
+            mb={4}
+            pos="relative"
+            _after={{
+              content: '""',
+              w: 4,
+              h: 4,
+              bg: "green.300",
+              border: "2px solid white",
+              rounded: "full",
+              pos: "absolute",
+              bottom: 0,
+              right: 3,
+            }}
+          />
+        </Flex>
+        <Heading fontSize="2xl" textAlign="center">
+          {`${firstName} ${surname}`}
+        </Heading>
+        <Text textAlign="center" fontWeight={600} color="gray.500" mb={4}>
+          @{username}
+        </Text>
+        <Text textAlign="center" color="gray.700" px={3}>
+          <Heading size="xs" color="gray.400">
+            {isAdmin ? "ADMIN OF" : "PART OF"}
+          </Heading>
+          <Link color="#1ac0c6">
+            <RouterLink to="/GroupFeed">#{group}</RouterLink>
+          </Link>
+        </Text>
+
+        {/* <Grid placeItems="center" pt={8}>
+          <HStack>
+            <Text className="material-icons" color="gray.500" fontSize="2xl">
+              schedule
+            </Text>
+            <Heading size="xl" color="gray.500" fontSize="2xl">
+              {hours + ' HOURS'}
+            </Heading>
+          </HStack>
+        </Grid> */}
+
+        <Box p={10} textAlign="right">
+          <LogoutButton size="sm" bg="#facd60" />
+        </Box>
+      </Box>
+    </Center>
   );
 }
+
 export default ProfileCard;

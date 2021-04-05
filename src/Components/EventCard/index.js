@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import React, { useEffect } from 'react';
 import {
   Accordion,
   AccordionButton,
@@ -7,17 +5,22 @@ import {
   AccordionItem,
   AccordionPanel,
   Box,
-  WrapItem,
-  Heading,
   GridItem,
-} from '@chakra-ui/react';
-import { getAddress, updateUser } from '../../Libs/httpRequests';
-import GenericButton from 'Components/GenericButton';
-import { useUserContext } from 'Libs/userContext';
+  Heading,
+  HStack,
+  Text,
+  WrapItem,
+} from "@chakra-ui/react";
+import GenericButton from "Components/GenericButton";
+import { useUserContext } from "Libs/userContext";
+import { DateTime } from "luxon";
+import React, { useEffect, useState } from "react";
+import { getAddress, updateUser } from "../../Libs/httpRequests";
+import EventCardWrapper from "./wrapper";
 
 function EventCard({
   name,
-  time,
+  time: dateTime,
   longitude,
   latitude,
   description,
@@ -26,19 +29,27 @@ function EventCard({
   willAttend,
   id,
 }) {
-  const date = new Date(time).toString().slice(0, 15);
-  const timeOfEvent = new Date(time).toString().slice(16, 21);
+  const date = DateTime.fromISO(dateTime).toHTTP().slice(0, 17);
+  const time = DateTime.fromISO(dateTime)
+    .toLocaleString(DateTime.DATETIME_MED)
+    .slice(13);
+  const shortDate = date.slice(5, -6);
 
   const { dbUser, setDbUser } = useUserContext();
 
   const [toUpdateUser, setToUpdateUser] = useState(false);
   const [userToUpdate, setUserToUpdate] = useState(dbUser);
 
-  function handleClick() {
+  const [address, setAddress] = useState({
+    road: null,
+    city: null,
+    postcode: null,
+  });
+
+  function attendEvent() {
     setUserToUpdate({ ...dbUser, eventsIds: [...dbUser?.eventsIds, id] });
     setToUpdateUser(true);
   }
-  console.log(userToUpdate);
 
   useEffect(() => {
     if (toUpdateUser) {
@@ -52,7 +63,6 @@ function EventCard({
     // eslint-disable-next-line
   }, [toUpdateUser]);
 
-  const [address, setAddress] = useState([]);
   useEffect(() => {
     getAddress(
       process.env.REACT_APP_NOMINATIM_URL,
@@ -64,34 +74,65 @@ function EventCard({
   }, []);
 
   return (
-    <GridItem>
-      <Accordion bg={willAttend ? '#facd60' : 'white'} allowToggle minW="100%">
-        <AccordionItem textAlign="center">
-          <AccordionButton textAlign="center">
-            <Box flex="1" textAlign="center">
-              <Heading size="sm">{name}</Heading>
-            </Box>
-            <AccordionIcon />
-          </AccordionButton>
+    <EventCardWrapper
+      border="2px solid #1ac0c6"
+      shortDate={shortDate}
+      willAttend={willAttend}
+    >
+      <GridItem w="100%">
+        <Accordion allowToggle minW="100%">
+          <AccordionItem textAlign="center">
+            <AccordionButton>
+              <Box flex="1">
+                <Heading size="md" textAlign="center">
+                  {name}
+                </Heading>
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
 
-          <AccordionPanel textAlign="left" pb={4}>
-            <WrapItem>Date: {date}</WrapItem>
-            <WrapItem>Time: {timeOfEvent}</WrapItem>
-            <WrapItem>
-              Location: {address[0]}, {address[1]}, {address[2]}
-            </WrapItem>
-            <WrapItem>Description: {description}</WrapItem>
-            <WrapItem>Exercise Type: {exerciseType}</WrapItem>
-            <WrapItem>Intensity: {intensity}</WrapItem>
-            <GenericButton
-              text="Attend"
-              handleClick={handleClick}
-              display={willAttend ? 'none' : null}
-            ></GenericButton>
-          </AccordionPanel>
-        </AccordionItem>
-      </Accordion>
-    </GridItem>
+            <AccordionPanel textAlign="left" pb={4}>
+              <HStack>
+                <Heading size="xs" color="#1ac0c6">
+                  DATE
+                </Heading>
+                <Text>{date}</Text>
+                <Heading size="xs" color="#1ac0c6">
+                  AT
+                </Heading>
+                <Text>{time}</Text>
+              </HStack>
+
+              <Text my={5}>{description}</Text>
+              <WrapItem>
+                <Text fontWeight={500} fontSize="md" color="gray.400">
+                  <span className="material-icons">moving</span>{" "}
+                  {intensity.toUpperCase()}
+                </Text>
+              </WrapItem>
+              <WrapItem>
+                <Text fontWeight={500} fontSize="md" color="gray.400">
+                  <span className="material-icons">fitness_center</span>
+                  {" " + exerciseType.toUpperCase()}
+                </Text>
+              </WrapItem>
+
+              <Text fontWeight={500} fontSize="md" color="gray.400">
+                <span className="material-icons">place</span> {address.road},{" "}
+                {address.city}, {address.postcode}
+              </Text>
+              <Box textAlign="right">
+                <GenericButton
+                  text="Attend"
+                  handleClick={attendEvent}
+                  display={willAttend ? "none" : null}
+                />
+              </Box>
+            </AccordionPanel>
+          </AccordionItem>
+        </Accordion>
+      </GridItem>
+    </EventCardWrapper>
   );
 }
 export default EventCard;
