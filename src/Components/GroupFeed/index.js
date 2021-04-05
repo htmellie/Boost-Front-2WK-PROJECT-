@@ -34,17 +34,17 @@ function GroupFeed() {
         <Heading>Group Feed</Heading>
 
         <GridItem py={5} w="full">
-          {/* <Heading ml={2} size="md" color="black">
+          <Heading ml={2} size="md" color="black">
             Attending Events
-          </Heading> */}
+          </Heading>
           {eventsWillAttend.map((event) => (
             <EventCard {...event} key={event.id} willAttend={true} />
           ))}
         </GridItem>
         <GridItem py={5} w="full">
-          {/* <Heading ml={2} size="md" color="black">
+          <Heading ml={2} size="md" color="black">
             Other Events
-          </Heading> */}
+          </Heading>
           <Box w="full">
             {eventsWillNotAttend.map((event) => (
               <EventCard {...event} key={event.id} willAttend={false} />
